@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta por Fechas</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="consulta-container">
+      <a href="dashboard.html" class="back-button">← Volver</a>
+      <h1>Consulta por Fechas</h1>
+
+      <div class="date-range">
+        <div class="input-group">
+          <label for="fechaInicio">Fecha Inicio</label>
+          <input type="date" id="fechaInicio" required />
+        </div>
+        <div class="input-group">
+          <label for="fechaFin">Fecha Fin</label>
+          <input type="date" id="fechaFin" required />
+        </div>
+        <button id="consultarBtn" class="action-btn">Consultar</button>
+        <button id="obtenerInfoBtn" class="action-btn" disabled>Obtener Información</button>
+      </div>
+
+      <div class="results-table">
+        <table id="resultadosTable">
+          <thead>
+            <tr>
+              <th>Nombre Empresa</th>
+              <th>RUC</th>
+              <th>IdSolicitud</th>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Fecha Salida</th>
+              <th>Fecha Llegada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Los resultados se llenarán aquí -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+          <div class="spinner"></div>
+          <div class="loading-text">Cargando datos...</div>
+      </div>
+  </div>
+
+    <script src="js/consulta.js"></script>
+  </body>
+</html>
