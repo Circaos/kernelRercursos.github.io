@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
   const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
-  const tablaResultados = document
-    .getElementById("resultadosTable")
-    .getElementsByTagName("tbody")[0];
+  const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
   const loadingOverlay = document.getElementById("loadingOverlay");
 
-  // Variables
+  //URL for EndPoints
+  const ENDPOINT = "http://192.168.1.39:1333/";
+
+  // Almacenamiento de datos
   let allData = [];
 
   // Mostrar spinner
@@ -31,6 +32,17 @@ document.addEventListener("DOMContentLoaded", function () {
     obtenerInfoBtn.classList.remove("enabled");
   }
 
+  // Habilitar/deshabilitar botón de información
+  function enableInfoButton() {
+    obtenerInfoBtn.disabled = false;
+    obtenerInfoBtn.classList.add("enabled");
+  }
+
+  function disableInfoButton() {
+    obtenerInfoBtn.disabled = true;
+    obtenerInfoBtn.classList.remove("enabled");
+  }
+
   // Funcion Pintado Tabla
   /**
    * @param {Array<String>} listaEmpresas - Este parámetro debe ser un array.
@@ -46,6 +58,46 @@ document.addEventListener("DOMContentLoaded", function () {
       row.insertCell(3).textContent = item.destino || "-/-";
       row.insertCell(3).textContent = item.fechaSalida || "-/-";
       row.insertCell(3).textContent = item.fechaLLegada || "-/-";
+    });
+  }
+
+  function displayData() {
+    tablaResultados.innerHTML = "";
+
+    if (allData.length === 0) {
+      const emptyRow = tablaResultados.insertRow();
+      const emptyCell = emptyRow.insertCell(0);
+      emptyCell.colSpan = 5;
+      emptyCell.textContent = "No hay datos para mostrar";
+      emptyCell.style.textAlign = "center";
+      return;
+    }
+
+    // Obtener valores de los filtros
+    const idFilter = document.querySelector('.column-filter[data-column="0"]').value.toLowerCase();
+    const nombreFilter = document.querySelector('.column-filter[data-column="1"]').value.toLowerCase();
+    const fechaFilter = document.querySelector('.date-filter[data-column="2"]').value;
+    const valorFilter = document.querySelector('.column-filter[data-column="3"]').value.toLowerCase();
+    const fechaConsultaFilter = document.querySelector('.date-filter[data-column="4"]').value;
+
+    // Filtrar datos
+    const filteredData = allData.filter((item) => {
+      const itemId = String(item.id || "").toLowerCase();
+      const itemNombre = String(item.nombre || "").toLowerCase();
+      const itemValor = String(item.valor || "").toLowerCase();
+      const itemFecha = String(item.fecha || "");
+      const itemFechaConsulta = String(item.fechaConsulta || "");
+
+      return (
+        itemId.includes(idFilter) &&
+        itemNombre.includes(nombreFilter) &&
+        (fechaFilter === "" || itemFecha === fechaFilter) &&
+        itemValor.includes(valorFilter) &&
+        (fechaConsultaFilter === "" ||
+          (fechaConsultaFilter === "today"
+            ? itemFechaConsulta === today
+            : itemFechaConsulta.includes(fechaConsultaFilter)))
+      );
     });
   }
 
@@ -92,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingCell.style.textAlign = "center";
 
     // Simular llamada a la API (reemplazar con tu API real)
-    fetch("http://192.168.1.39:1333/webInt/getInfoFechaProviasSession", {
+    fetch(`${ENDPOINT}webInt/getInfoFechaProviasSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,14 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         enableInfoButton();
 
-        // Llenar la tabla con los resultados
-        // data.listaEmpresas.forEach((item) => {
-        //   const row = tablaResultados.insertRow();
-        //   row.insertCell(0).textContent = item.razonSocial || "N/A";
-        //   row.insertCell(1).textContent = item.ruc || "N/A";
-        //   row.insertCell(2).textContent = item.idSolicitud || "N/A";
-        //   // row.insertCell(3).textContent = item.valor || 'N/A';
-        // });
         pintadoTabla(data.listaEmpresas);
       })
       .catch((error) => {
@@ -171,8 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // const lastDate = allData[totalItems - 1].fecha;
 
     // alert(`Información obtenida:\n\n- Total de registros: ${totalItems}\n- Fecha inicial: ${firstDate}\n- Fecha final: ${lastDate}`);
-    showLoading()
-    fetch("http://192.168.1.39:1333/webInt/getDataFiltradaSession", {
+    showLoading();
+    fetch(`${ENDPOINT}webInt/getDataFiltradaSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -180,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({
         listaEmpresas: allData.listaEmpresas,
-        sessionCode: sessionCode
+        sessionCode: sessionCode,
       }),
     })
       .then((response) => {
@@ -194,12 +238,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         hideLoading();
 
-
-
         // allData = data;
 
         console.log(data);
-        pintadoTabla(data.dataEncontrada)
+        pintadoTabla(data.dataEncontrada);
         // if (data.estatus == 400) {
         //   alert(`Error en Session, ${data.mensaje}`);
         //   window.location.href = "index.html";

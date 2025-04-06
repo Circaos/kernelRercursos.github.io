@@ -21,20 +21,88 @@
           <input type="date" id="fechaFin" required />
         </div>
         <button id="consultarBtn" class="action-btn">Consultar</button>
-        <button id="obtenerInfoBtn" class="action-btn" disabled>Obtener Información</button>
+        <button id="obtenerInfoBtn" class="action-btn" disabled>
+          Obtener Información
+        </button>
       </div>
 
       <div class="results-table">
         <table id="resultadosTable">
           <thead>
             <tr>
-              <th>Nombre Empresa</th>
-              <th>RUC</th>
-              <th>IdSolicitud</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Fecha Salida</th>
-              <th>Fecha Llegada</th>
+              <th>
+                <div class="filter-header">
+                  Razon Social
+                  <input
+                    type="text"
+                    class="column-filter"
+                    data-column="0"
+                    placeholder="Filtrar Razon Social..."
+                  />
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  RUC
+                  <input
+                    type="text"
+                    class="column-filter"
+                    data-column="1"
+                    placeholder="Filtrar RUC..."
+                  />
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  ID solicitud
+                  <input
+                    type="text"
+                    class="column-filter"
+                    data-column="2"
+                    placeholder="Filtrar ID solicitud..."
+                  />
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  Fecha
+                  <select class="date-filter" data-column="3">
+                    <option value="">Todas las fechas</option>
+                    <!-- Las opciones se llenarán dinámicamente -->
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  Fecha
+                  <select class="date-filter" data-column="4">
+                    <option value="">Todas las fechas</option>
+                    <!-- Las opciones se llenarán dinámicamente -->
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  Origen
+                  <input
+                    type="text"
+                    class="column-filter"
+                    data-column="5"
+                    placeholder="Filtrar Origen..."
+                  />
+                </div>
+              </th>
+              <th>
+                <div class="filter-header">
+                  Destino
+                  <input
+                    type="text"
+                    class="column-filter"
+                    data-column="6"
+                    placeholder="Filtrar Destino..."
+                  />
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -43,13 +111,13 @@
         </table>
       </div>
     </div>
-    
+
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loading-content">
-          <div class="spinner"></div>
-          <div class="loading-text">Cargando datos...</div>
+        <div class="spinner"></div>
+        <div class="loading-text">Cargando datos...</div>
       </div>
-  </div>
+    </div>
 
     <script src="js/consulta.js"></script>
   </body>
