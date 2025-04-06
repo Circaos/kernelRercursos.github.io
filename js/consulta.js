@@ -1,13 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
   const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
-  const tablaResultados = document
-    .getElementById("resultadosTable")
-    .getElementsByTagName("tbody")[0];
+  const modalBtn = document.getElementById("modalBtn");
+  const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
   const loadingOverlay = document.getElementById("loadingOverlay");
 
   // Variables
+  /**
+   * @type {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string}>}
+   */
   let allData = [];
+
+  /** @type {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string}} */
+  let filtroData = {
+    RsFilt: "",
+    rucFilt: "",
+    idSolFilt: "",
+    origen: "",
+    destino: "",
+  };
+
+  let varID = "";
 
   // Mostrar spinner
   function showLoading() {
@@ -33,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Funcion Pintado Tabla
   /**
-   * @param {Array<String>} listaEmpresas - Este parámetro debe ser un array.
+   * @param {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string}>} listaEmpresas - Este parámetro debe ser un array.
    */
   function pintadoTabla(listaEmpresas) {
     tablaResultados.innerHTML = "";
@@ -43,10 +56,77 @@ document.addEventListener("DOMContentLoaded", function () {
       row.insertCell(1).textContent = item.ruc || "-/-";
       row.insertCell(2).textContent = item.idSolicitud || "-/-";
       row.insertCell(3).textContent = item.origen || "-/-";
-      row.insertCell(3).textContent = item.destino || "-/-";
-      row.insertCell(3).textContent = item.fechaSalida || "-/-";
-      row.insertCell(3).textContent = item.fechaLLegada || "-/-";
+      row.insertCell(4).textContent = item.destino || "-/-";
+      row.insertCell(5).textContent = item.fechaSalida || "-/-";
+      row.insertCell(6).textContent = item.fechaLLegada || "-/-";
     });
+  }
+
+  // Funcion de filtrado
+  /**@param {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string}} filtro  */
+  function filtrado(filtro) {
+    let dataFiltrada = allData;
+
+    const cabeceraNombreEmpresa = document.getElementById("nombreEmpresaID");
+    const cabeceraRuc = document.getElementById("rucID");
+    const cabeceraIdSolicitud = document.getElementById("idSolicitudID");
+    const cabeceraOrigen = document.getElementById("origenID");
+    const cabeceraDestino = document.getElementById("destinoID");
+
+
+    if (filtro.RsFilt != "") {
+      cabeceraNombreEmpresa.classList.add("cabeceraFiltrada");
+      cabeceraNombreEmpresa.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.razonSocial.includes(filtro.RsFilt) || item.razonSocial.includes(filtro.RsFilt.toUpperCase())
+      );
+    } else {
+      cabeceraNombreEmpresa.classList.remove("cabeceraFiltrada");
+      cabeceraNombreEmpresa.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.rucFilt != "") {
+      cabeceraRuc.classList.add("cabeceraFiltrada");
+      cabeceraRuc.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.ruc.includes(filtro.rucFilt) || item.ruc.includes(filtro.rucFilt.toUpperCase())
+      );
+    } else {
+      cabeceraRuc.classList.remove("cabeceraFiltrada");
+      cabeceraRuc.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.idSolFilt != "") {
+      cabeceraIdSolicitud.classList.add("cabeceraFiltrada");
+      cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) =>
+          item.idSolicitud.includes(filtro.idSolFilt) || item.idSolicitud.includes(filtro.idSolFilt.toUpperCase())
+      );
+    } else {
+      cabeceraIdSolicitud.classList.remove("cabeceraFiltrada");
+      cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.origen != "") {
+      cabeceraOrigen.classList.add("cabeceraFiltrada");
+      cabeceraOrigen.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.origen.includes(filtro.origen) || item.origen.includes(filtro.origen.toUpperCase())
+      );
+    } else {
+      cabeceraOrigen.classList.remove("cabeceraFiltrada");
+      cabeceraOrigen.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.destino != "") {
+      cabeceraDestino.classList.add("cabeceraFiltrada");
+      cabeceraDestino.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.destino.includes(filtro.destino) || item.destino.includes(filtro.destino.toUpperCase())
+      );
+    } else {
+      cabeceraDestino.classList.remove("cabeceraFiltrada");
+      cabeceraDestino.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+
+    pintadoTabla(dataFiltrada);
   }
 
   // Inicialmente deshabilitar el botón
@@ -114,9 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Limpiar mensaje de carga
 
         hideLoading();
-        allData = data;
+        allData = data.listaEmpresas;
 
-        console.log(data);
+        // console.log(data);
         if (data.estatus == 400) {
           alert(`Error en Session, ${data.mensaje}`);
           window.location.href = "index.html";
@@ -165,13 +245,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Ejemplo alternativo: Mostrar resumen de información
     // const totalItems = allData.length;
 
-    console.log(allData.listaEmpresas);
-
-    // const firstDate = allData[0].fecha;
-    // const lastDate = allData[totalItems - 1].fecha;
+    // console.log(allData);
 
     // alert(`Información obtenida:\n\n- Total de registros: ${totalItems}\n- Fecha inicial: ${firstDate}\n- Fecha final: ${lastDate}`);
-    showLoading()
+    if (allData.length > 200) {
+      alert(`La consulta es muy costosa, ajuste las fechas`)
+      return
+    }
+    
+    showLoading();
     fetch("http://192.168.1.39:1333/webInt/getDataFiltradaSession", {
       method: "POST",
       headers: {
@@ -179,8 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // 'Authorization': `Bearer ${sessionCode}`
       },
       body: JSON.stringify({
-        listaEmpresas: allData.listaEmpresas,
-        sessionCode: sessionCode
+        listaEmpresas: allData,
+        sessionCode: sessionCode,
       }),
     })
       .then((response) => {
@@ -194,12 +276,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         hideLoading();
 
-
-
-        // allData = data;
+        allData = data.dataEncontrada;
 
         console.log(data);
-        pintadoTabla(data.dataEncontrada)
+        pintadoTabla(allData);
         // if (data.estatus == 400) {
         //   alert(`Error en Session, ${data.mensaje}`);
         //   window.location.href = "index.html";
@@ -232,5 +312,165 @@ document.addEventListener("DOMContentLoaded", function () {
         errorCell.style.textAlign = "center";
         errorCell.style.color = "red";
       });
+  });
+
+  // Elementos para el modal
+  const modal = document.getElementById("myModal");
+  const closeBtn = document.getElementById("cancelBtn");
+  const okBtn = document.getElementById("okBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const cabeceras = document.getElementById("resultadosTable");
+  const textoModal = document.getElementById("modalTextarea");
+
+  // Funcion mostrar Modal
+  /**
+   * @param {String} nombreModal - Este parámetro debe ser un array.
+   */
+  function mostrarModal(nombreModal) {
+    modal.style.display = "flex"; // Mostrar modal
+    const label = document.querySelector("#input-group-modal > label");
+    label.textContent = `Filtrar ${nombreModal}`;
+
+    let textoContenedor = ""
+    switch (varID) {
+      case "nombreEmpresaID":
+        textoContenedor = filtroData.RsFilt
+        break;
+      case "rucID":
+        textoContenedor = filtroData.rucFilt
+        break;
+      case "idSolicitudID":
+        textoContenedor = filtroData.idSolFilt
+        break;
+      case "origenID":
+        textoContenedor = filtroData.origen
+        break;
+      case "destinoID":
+        textoContenedor = filtroData.destino
+        break;
+      default:
+        break;
+    }
+    textoModal.value = textoContenedor
+
+    textoModal.focus();
+  }
+
+  // Funcion ocultar Modal
+  function ocultarModal() {
+    modal.style.display = "none";
+  }
+
+  modalBtn.addEventListener("click", function () {
+    mostrarModal("Holi");
+  });
+
+  // Cerrar modal al hacer clic en la X
+  closeBtn.addEventListener("click", () => {
+    ocultarModal();
+  });
+
+  // Cerrar modal al hacer clic en OK
+  okBtn.addEventListener("click", () => {
+    const text = document.getElementById("modalTextarea").value;
+    console.log("Texto ingresado:", text); // Puedes hacer algo con el texto
+    modal.style.display = "none";
+  });
+
+  // Cerrar modal al hacer clic en Cancelar
+  cancelBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Cerrar modal al hacer clic fuera del contenido
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      // Si se hace clic en el fondo oscuro
+      modal.style.display = "none";
+    }
+  });
+
+  textoModal.addEventListener("input", function (e) {
+    switch (varID) {
+      case "nombreEmpresaID":
+        filtroData.RsFilt = e.target.value;
+        filtrado(filtroData);
+        break;
+      case "rucID":
+        filtroData.rucFilt = e.target.value;
+        filtrado(filtroData);
+        break;
+      case "idSolicitudID":
+        filtroData.idSolFilt = e.target.value;
+        filtrado(filtroData);
+        break;
+      case "origenID":
+        filtroData.origen = e.target.value;
+        filtrado(filtroData);
+        break;
+      case "destinoID":
+        filtroData.destino = e.target.value;
+        filtrado(filtroData);
+        break;
+      default:
+        break;
+    }
+  });
+
+  // Cabeceras de Columnas
+  cabeceras.addEventListener("click", (e) => {
+    console.log(e.target);
+
+    if (e.target.matches("th")) {
+      console.log("Se hizo click al th");
+      varID = e.target.id;
+      mostrarModal(e.target.querySelector("div.cabeceraTabla").textContent);
+    } else if (e.target.matches(".cabeceraTabla")) {
+      console.log(e.target.parentElement.id);
+      console.log("Se hizo click al cabeceraTabla");
+      varID = e.target.parentElement.id;
+      mostrarModal(e.target.textContent);
+    } else if (e.target.matches(".iconoCabeceraTabla")) {
+      console.log("Se hizo click al iconoCabeceraTabla");
+      let idParent = e.target.parentElement.id;
+
+      if (e.target.textContent == "❌") {
+        switch (idParent) {
+          case "nombreEmpresaID":
+            filtroData.RsFilt = "";
+            break;
+          case "rucID":
+            filtroData.rucFilt = "";
+            break;
+          case "idSolicitudID":
+            filtroData.idSolFilt = "";
+            break;
+          case "origenID":
+            filtroData.origen = "";
+            break;
+          case "destinoID":
+            filtroData.destino = "";
+            break;
+          default:
+            break;
+        }
+        filtrado(filtroData);
+      }
+    }
+    // mostrarModal(e.target.textContent);
+
+    // if (e.target.matches('#nombreEmpresaID')) {
+    //   mostrarModal()
+    // }else if (e.target.matches('#nombreEmpresaID')) {
+
+    // }else if (e.target.matches('#nombreEmpresaID')) {
+
+    // }else if (e.target.matches('#nombreEmpresaID')) {
+
+    // }else if (e.target.matches('#nombreEmpresaID')) {
+
+    // }
+
+    // console.log(e.target.matches('#nombreEmpresaID'))
   });
 });

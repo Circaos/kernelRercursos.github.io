@@ -127,7 +127,7 @@ body {
 /* Estilos para la vista de consulta */
 .consulta-container {
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -179,7 +179,7 @@ table {
 }
 
 th, td {
-  padding: 1rem;
+  padding: 0.7rem;
   text-align: left;
   border-bottom: 1px solid #eee;
 }

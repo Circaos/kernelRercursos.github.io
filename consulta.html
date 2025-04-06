@@ -1,56 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Consulta por Fechas</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <div class="consulta-container">
-      <a href="dashboard.html" class="back-button">← Volver</a>
-      <h1>Consulta por Fechas</h1>
 
-      <div class="date-range">
-        <div class="input-group">
-          <label for="fechaInicio">Fecha Inicio</label>
-          <input type="date" id="fechaInicio" required />
-        </div>
-        <div class="input-group">
-          <label for="fechaFin">Fecha Fin</label>
-          <input type="date" id="fechaFin" required />
-        </div>
-        <button id="consultarBtn" class="action-btn">Consultar</button>
-        <button id="obtenerInfoBtn" class="action-btn" disabled>Obtener Información</button>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta por Fechas</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/cabecera.css">
+</head>
 
-      <div class="results-table">
-        <table id="resultadosTable">
-          <thead>
-            <tr>
-              <th>Nombre Empresa</th>
-              <th>RUC</th>
-              <th>IdSolicitud</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Fecha Salida</th>
-              <th>Fecha Llegada</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Los resultados se llenarán aquí -->
-          </tbody>
-        </table>
+<body>
+  <div class="consulta-container">
+    <a href="dashboard.html" class="back-button">← Volver</a>
+    <h1>Consulta por Fechas</h1>
+
+    <div class="date-range">
+      <div class="input-group">
+        <label for="fechaInicio">Fecha Inicio</label>
+        <input type="date" id="fechaInicio" required />
       </div>
+      <div class="input-group">
+        <label for="fechaFin">Fecha Fin</label>
+        <input type="date" id="fechaFin" required />
+      </div>
+      <button id="consultarBtn" class="action-btn">Consultar</button>
+      <button id="obtenerInfoBtn" class="action-btn" disabled>Obtener Información</button>
+      <button id="modalBtn" class="action-btn">Prueba Modal</button>
     </div>
-    
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="loading-content">
-          <div class="spinner"></div>
-          <div class="loading-text">Cargando datos...</div>
-      </div>
+
+    <div class="results-table">
+      <table id="resultadosTable">
+        <thead>
+          <tr>
+            <th id="nombreEmpresaID">
+              <div class="cabeceraTabla">Nombre Empresa</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="rucID">
+              <div class="cabeceraTabla">Ruc</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="idSolicitudID">
+              <div class="cabeceraTabla">IdSolicitud</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="origenID">
+              <div class="cabeceraTabla">Origen</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="destinoID">
+              <div class="cabeceraTabla">Destino</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="fechaSalidaID">
+              <div class="cabeceraTabla">Fecha Salida</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+            <th id="fechaLlegadaID">
+              <div class="cabeceraTabla">Fecha Llegada</div>
+              <div class="iconoCabeceraTabla">🔎</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Los resultados se llenarán aquí -->
+        </tbody>
+      </table>
+    </div>
   </div>
 
-    <script src="js/consulta.js"></script>
-  </body>
+  <!-- Ventana Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-box">
+      <!-- <h1>Iniciar Sesión</h1> -->
+      <div class="input-group-modal" id="input-group-modal">
+        <label for="modalTextarea">Filtro</label>
+        <input type="text" id="modalTextarea" required />
+      </div>
+      <div class="modal-buttons">
+        <button id="okBtn" class="login-btn">OK</button>
+        <button id="cancelBtn" class="login-btn">Borrar</button>
+      </div>
+      <div id="errorMessage" class="error-message"></div>
+    </div>
+  </div>
+
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">Cargando datos...</div>
+    </div>
+  </div>
+
+  <script src="js/consulta.js"></script>
+</body>
+
 </html>
