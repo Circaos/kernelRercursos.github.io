@@ -242,7 +242,13 @@ document.addEventListener("DOMContentLoaded", function () {
   /**@param {{numero:string, nombres:string, apellido_paterno:string,apellido_materno:string}[]} data */
   function rellenarTablaDniDatos(data) {
     if (!Array.isArray(data)) {
-      return mostrarAlertaDniDatos(data.mensaje);
+      if (data.mensaje) {
+        return mostrarAlertaDniDatos(data.mensaje);
+      }else if(data.error){
+        return mostrarAlertaDniDatos(data.error);
+      }else{
+        return mostrarAlertaDniDatos("ERROR");
+      }
     }
 
     const tablaBody = document.querySelector(`#tabla-resultados3 tbody`);
