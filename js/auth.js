@@ -9,7 +9,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   errorMessage.style.display = "none";
 
   // Simular llamada a la API (reemplazar con tu API real)
-  fetch("http://192.168.1.39:1333/webInt/login", {
+  fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

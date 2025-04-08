@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingCell.style.textAlign = "center";
 
     // Simular llamada a la API (reemplazar con tu API real)
-    fetch("http://192.168.1.39:1333/webInt/getInfoFechaProviasSession", {
+    fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/getInfoFechaProviasSession", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     showLoading();
-    fetch("http://192.168.1.39:1333/webInt/getDataFiltradaSession", {
+    fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/getDataFiltradaSession", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

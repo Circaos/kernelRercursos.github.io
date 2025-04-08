@@ -1,0 +1,416 @@
+/* informes.css - Estilos específicos para la página de informes con pestañas */
+
+/* Estilos base del contenedor */
+.informes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo para el botón de volver */
+.informes-back-button {
+  display: inline-block;
+  padding: 8px 16px;
+  /* margin-bottom: 20px; */
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.informes-back-button:hover {
+  background-color: #2980b9;
+}
+
+/* Estilo para el título principal */
+.informes-title {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Contenedor de pestañas */
+.informes-tabs-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Barra de pestañas */
+.informes-tabs {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Botones de pestaña */
+.informes-tab-button {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.3s ease;
+  position: relative;
+  outline: none;
+}
+
+.informes-tab-button:hover {
+  background: #eef2f5;
+  color: #3498db;
+}
+
+.informes-tab-button.active {
+  color: #3498db;
+  background: white;
+}
+
+.informes-tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #3498db;
+}
+
+/* Contenido de pestañas */
+.informes-tab-content {
+  display: none;
+  padding: 25px;
+}
+
+.informes-tab-content.active {
+  display: block;
+}
+
+/* Sección de inputs */
+.informes-input-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: flex-end;
+}
+
+.informes-input-group {
+  margin-bottom: 0;
+}
+
+.informes-input-group label {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.informes-input-group input,
+.informes-input-group select {
+  width: 90%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.informes-input-group input:focus,
+.informes-input-group select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Botón de consulta */
+.informes-consultar-btn {
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 40px;
+}
+
+.informes-consultar-btn:hover {
+  background-color: #27ae60;
+}
+
+/* Sección de resultados */
+.informes-results-section {
+  margin-top: 15px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.informes-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.informes-results-table th {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  font-weight: 600;
+}
+
+.informes-results-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.informes-results-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.informes-results-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Overlay de carga */
+.informes-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+}
+
+.informes-loading-content {
+  text-align: center;
+}
+
+.informes-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: informes-spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes informes-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.informes-loading-text {
+  font-size: 16px;
+  color: #3498db;
+  font-weight: 600;
+}
+
+/* Estilos para la card de datos */
+.informes-data-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.informes-card-header {
+  background: #3498db;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.informes-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.informes-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.informes-card-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.informes-card-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.informes-card-body {
+  padding: 20px;
+}
+
+.informes-data-row {
+  display: flex;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.informes-data-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.informes-data-key {
+  font-weight: 600;
+  color: #555;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.informes-data-value {
+  color: #333;
+  word-break: break-word;
+}
+
+.informes-card-footer {
+  background: #f9f9f9;
+  padding: 10px 20px;
+  text-align: right;
+  font-size: 13px;
+  color: #666;
+}
+
+.informes-timestamp {
+  font-style: italic;
+}
+
+/* Estilos para iconos (usando Font Awesome) */
+.fas {
+  font-size: 14px;
+}
+
+/* Estilos para estados */
+.informes-data-value[data-status="active"] {
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+.informes-data-value[data-status="inactive"] {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.informes-data-value[data-status="pending"] {
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.informes-card-alert{
+  background: #db6234;
+}
+
+.ocultarClass{
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .informes-data-card {
+      max-width: 100%;
+  }
+  
+  .informes-data-row {
+      flex-direction: column;
+  }
+  
+  .informes-data-key {
+      width: 100%;
+      margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .informes-card-header {
+      /* flex-direction: column; */
+      /* align-items: flex-start; */
+      gap: 10px;
+  }
+  
+  .informes-card-body {
+      padding: 15px;
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+
+  .informes-container {
+      padding: 10px;
+  }
+  
+  .informes-tabs {
+      flex-wrap: wrap;
+  }
+  
+  .informes-tab-button {
+      flex: 1 0 auto;
+      padding: 10px 5px;
+      font-size: 14px;
+      text-align: center;
+  }
+  
+  .informes-input-section {
+      grid-template-columns: 1fr;
+  }
+  
+  .informes-tab-content {
+      padding: 15px;
+  }
+  
+  .informes-results-section {
+      max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .informes-results-table th,
+  .informes-results-table td {
+      padding: 8px 10px;
+      font-size: 13px;
+  }
+  
+  .informes-consultar-btn {
+      width: 100%;
+  }
+}
