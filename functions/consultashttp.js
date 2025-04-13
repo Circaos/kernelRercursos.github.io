@@ -64,6 +64,23 @@ export async function consultaDniPorDatos(nombres, apellidoPaterno, apellidoMate
   return data
 }
 
+/**@param {string} dni  *@param {string} sessionCode */
+export async function consultaFechaNacimientoPorDni(dni,sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/fechaNacimiento`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      dni: dni,
+      sessionCode: sessionCode,
+    }),
+  })
+  const data = await response.json()
+  console.log(data)
+  return data
+}
+
 // const utlis = {
 //   consultaDNI
 // }

@@ -1,4 +1,4 @@
-import { consultaDNI, consultaRUC,consultaDniPorDatos } from "../functions/consultashttp.js";
+import { consultaDNI, consultaRUC,consultaDniPorDatos,consultaFechaNacimientoPorDni } from "../functions/consultashttp.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   // Variables globales
@@ -37,6 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function mostrarAlertaDNI(msg) {
     const alerta = document.getElementById("card-alerta");
+    alerta.querySelector("h3").textContent = `Error: ${msg}`;
+    alerta.classList.remove("ocultarClass");
+  }
+
+  function ocultarAlertaFecha() {
+    const alerta = document.getElementById("card-alerta-fecha");
+    alerta.classList.add("ocultarClass");
+  }
+
+  function mostrarAlertaFecha(msg) {
+    const alerta = document.getElementById("card-alerta-fecha");
     alerta.querySelector("h3").textContent = `Error: ${msg}`;
     alerta.classList.remove("ocultarClass");
   }
@@ -156,11 +167,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         break;
       case "tab4":
-        params = {
-          seleccion: document.getElementById("tab4-campo1").value,
-          busqueda: document.getElementById("tab4-campo2").value,
-          tipo: "informe4",
-        };
+        LimpiarCardFecha();
+        ocultarAlertaFecha();
+
+        let fecha = document.getElementById("tab4-campo1").value;
+        const responseFecha = await consultaFechaNacimientoPorDni(fecha, sessionCode);
+        console.log(responseFecha);
+
+        if (responseFecha.estatus == 200) {
+          if (responseFecha.data.message) {
+            mostrarAlertaFecha(responseFecha.data.message);
+          } else {
+            pintarCardFecha(responseFecha.data);
+          }
+        } else if (responseFecha.estatus == 300) {
+          alert(`Error en Session, ${responseFecha.mensaje}`);
+          window.location.href = "index.html";
+          return;
+        } else {
+          mostrarAlertaFecha(responseFecha.mensaje);
+        }
         break;
     }
     hideLoading();
@@ -177,6 +203,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const carBody = document.getElementById("card-body-ruc");
     carBody.innerHTML = "";
   }
+
+    // Limpiar Card fecha
+    function LimpiarCardFecha() {
+      const carBody = document.getElementById("card-body-fecha");
+      carBody.innerHTML = "";
+    }
 
   // Limpiar tabla DNI Datos
   function LimpiarTablaDatosDNI() {
@@ -238,6 +270,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Funcion Pintar Card Fecha
+  /**@param {{dni:string, fechaNacimiento:string, nombres:string}} data */
+  function pintarCardFecha(data) {
+    const carBody = document.getElementById("card-body-fecha");
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        // Filtra solo propiedades propias del objeto
+        const row = document.createElement("div");
+        row.className = "informes-data-row";
+
+        const keySpan = document.createElement("span");
+        keySpan.className = "informes-data-key";
+        keySpan.textContent = `${key}:`;
+
+        const valueSpan = document.createElement("span");
+        valueSpan.className = "informes-data-value";
+        valueSpan.id = `card-${key.toLowerCase()}`; // ID único por propiedad
+        valueSpan.textContent = data[key];
+
+        row.appendChild(keySpan);
+        row.appendChild(valueSpan);
+        carBody.appendChild(row);
+      }
+    }
+  }
   // Rellenar Tabla
   /**@param {{numero:string, nombres:string, apellido_paterno:string,apellido_materno:string}[]} data */
   function rellenarTablaDniDatos(data) {
@@ -262,97 +320,97 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Función para mostrar resultados en la tabla
-  function mostrarResultados(tabId, data) {
-    const tablaBody = document.querySelector(`#${tabId} table tbody`);
-    tablaBody.innerHTML = "";
+  // // Función para mostrar resultados en la tabla
+  // function mostrarResultados(tabId, data) {
+  //   const tablaBody = document.querySelector(`#${tabId} table tbody`);
+  //   tablaBody.innerHTML = "";
 
-    if (!data || data.length === 0) {
-      tablaBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No se encontraron resultados</td></tr>';
-      return;
-    }
+  //   if (!data || data.length === 0) {
+  //     tablaBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No se encontraron resultados</td></tr>';
+  //     return;
+  //   }
 
-    // Llenar tabla según el tipo de informe
-    switch (tabId) {
-      case "tab1":
-        data.forEach((item) => {
-          const row = tablaBody.insertRow();
-          row.insertCell(0).textContent = item.id || "N/A";
-          row.insertCell(1).textContent = item.nombre || "N/A";
-          row.insertCell(2).textContent = item.valor || "N/A";
-          row.insertCell(3).textContent = item.fecha || "N/A";
-        });
-        break;
-      case "tab2":
-        data.forEach((item) => {
-          const row = tablaBody.insertRow();
-          row.insertCell(0).textContent = item.codigo || "N/A";
-          row.insertCell(1).textContent = item.descripcion || "N/A";
-          row.insertCell(2).textContent = item.cantidad || "N/A";
-          row.insertCell(3).textContent = item.estado || "N/A";
-        });
-        break;
-      case "tab3":
-        data.forEach((item) => {
-          const row = tablaBody.insertRow();
-          row.insertCell(0).textContent = item.numero || "N/A";
-          row.insertCell(1).textContent = item.concepto || "N/A";
-          row.insertCell(2).textContent = item.monto ? `$${item.monto.toFixed(2)}` : "N/A";
-          row.insertCell(3).textContent = item.porcentaje ? `${item.porcentaje}%` : "N/A";
-        });
-        break;
-      case "tab4":
-        data.forEach((item) => {
-          const row = tablaBody.insertRow();
-          row.insertCell(0).textContent = item.referencia || "N/A";
-          row.insertCell(1).textContent = item.cliente || "N/A";
-          row.insertCell(2).textContent = item.total ? `$${item.total.toFixed(2)}` : "N/A";
-          row.insertCell(3).textContent = item.fecha || "N/A";
-        });
-        break;
-    }
-  }
+  //   // Llenar tabla según el tipo de informe
+  //   switch (tabId) {
+  //     case "tab1":
+  //       data.forEach((item) => {
+  //         const row = tablaBody.insertRow();
+  //         row.insertCell(0).textContent = item.id || "N/A";
+  //         row.insertCell(1).textContent = item.nombre || "N/A";
+  //         row.insertCell(2).textContent = item.valor || "N/A";
+  //         row.insertCell(3).textContent = item.fecha || "N/A";
+  //       });
+  //       break;
+  //     case "tab2":
+  //       data.forEach((item) => {
+  //         const row = tablaBody.insertRow();
+  //         row.insertCell(0).textContent = item.codigo || "N/A";
+  //         row.insertCell(1).textContent = item.descripcion || "N/A";
+  //         row.insertCell(2).textContent = item.cantidad || "N/A";
+  //         row.insertCell(3).textContent = item.estado || "N/A";
+  //       });
+  //       break;
+  //     case "tab3":
+  //       data.forEach((item) => {
+  //         const row = tablaBody.insertRow();
+  //         row.insertCell(0).textContent = item.numero || "N/A";
+  //         row.insertCell(1).textContent = item.concepto || "N/A";
+  //         row.insertCell(2).textContent = item.monto ? `$${item.monto.toFixed(2)}` : "N/A";
+  //         row.insertCell(3).textContent = item.porcentaje ? `${item.porcentaje}%` : "N/A";
+  //       });
+  //       break;
+  //     case "tab4":
+  //       data.forEach((item) => {
+  //         const row = tablaBody.insertRow();
+  //         row.insertCell(0).textContent = item.referencia || "N/A";
+  //         row.insertCell(1).textContent = item.cliente || "N/A";
+  //         row.insertCell(2).textContent = item.total ? `$${item.total.toFixed(2)}` : "N/A";
+  //         row.insertCell(3).textContent = item.fecha || "N/A";
+  //       });
+  //       break;
+  //   }
+  // }
 
-  // Función para mostrar resultados en la card (pestaña 1)
-  function mostrarResultadosCard(data) {
-    const card = document.getElementById("card-resultados1");
+  // // Función para mostrar resultados en la card (pestaña 1)
+  // function mostrarResultadosCard(data) {
+  //   const card = document.getElementById("card-resultados1");
 
-    if (!data || data.length === 0) {
-      card.querySelector(".informes-card-body").innerHTML =
-        '<div class="informes-no-data">No se encontraron resultados</div>';
-      return;
-    }
+  //   if (!data || data.length === 0) {
+  //     card.querySelector(".informes-card-body").innerHTML =
+  //       '<div class="informes-no-data">No se encontraron resultados</div>';
+  //     return;
+  //   }
 
-    // Tomar el primer resultado (o modificar según tu lógica)
-    const item = data[0];
+  //   // Tomar el primer resultado (o modificar según tu lógica)
+  //   const item = data[0];
 
-    // Actualizar valores
-    document.getElementById("card-id").textContent = item.id || "N/A";
-    document.getElementById("card-nombre").textContent = item.nombre || "N/A";
-    document.getElementById("card-valor").textContent = item.valor ? `$${item.valor}` : "N/A";
-    document.getElementById("card-fecha").textContent = item.fecha || "N/A";
+  //   // Actualizar valores
+  //   document.getElementById("card-id").textContent = item.id || "N/A";
+  //   document.getElementById("card-nombre").textContent = item.nombre || "N/A";
+  //   document.getElementById("card-valor").textContent = item.valor ? `$${item.valor}` : "N/A";
+  //   document.getElementById("card-fecha").textContent = item.fecha || "N/A";
 
-    // Estado con estilo condicional
-    const estadoElement = document.getElementById("card-estado");
-    estadoElement.textContent = item.estado || "N/A";
-    estadoElement.setAttribute("data-status", (item.estado || "").toLowerCase());
+  //   // Estado con estilo condicional
+  //   const estadoElement = document.getElementById("card-estado");
+  //   estadoElement.textContent = item.estado || "N/A";
+  //   estadoElement.setAttribute("data-status", (item.estado || "").toLowerCase());
 
-    // Fechas
-    document.getElementById("card-actualizacion").textContent = item.actualizacion || "N/A";
-    document.getElementById("card-consulta").textContent = new Date().toLocaleString();
+  //   // Fechas
+  //   document.getElementById("card-actualizacion").textContent = item.actualizacion || "N/A";
+  //   document.getElementById("card-consulta").textContent = new Date().toLocaleString();
 
-    // Mostrar la card si estaba oculta
-    card.style.display = "block";
-  }
+  //   // Mostrar la card si estaba oculta
+  //   card.style.display = "block";
+  // }
 
-  // Modificar la función mostrarResultados para la pestaña 1
-  function mostrarResultados(tabId, data) {
-    if (tabId === "tab1") {
-      mostrarResultadosCard(data);
-    } else {
-      // ... (el resto del código para otras pestañas)
-    }
-  }
+  // // Modificar la función mostrarResultados para la pestaña 1
+  // function mostrarResultados(tabId, data) {
+  //   if (tabId === "tab1") {
+  //     mostrarResultadosCard(data);
+  //   } else {
+  //     // ... (el resto del código para otras pestañas)
+  //   }
+  // }
 
   // Añadir eventos para los botones de la card
   document.querySelector(".informes-print-btn")?.addEventListener("click", () => {

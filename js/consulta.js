@@ -363,9 +363,9 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "none";
   }
 
-  modalBtn.addEventListener("click", function () {
-    mostrarModal("Holi");
-  });
+  // modalBtn.addEventListener("click", function () {
+  //   mostrarModal("Holi");
+  // });
 
   // Cerrar modal al hacer clic en la X
   closeBtn.addEventListener("click", () => {

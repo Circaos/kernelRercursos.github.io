@@ -18,7 +18,7 @@
         <button class="informes-tab-button active" data-tab="tab1">Datos por DNI</button>
         <button class="informes-tab-button" data-tab="tab2">Datos por RUC</button>
         <button class="informes-tab-button" data-tab="tab3">DNI por Datos</button>
-        <!-- <button class="informes-tab-button" data-tab="tab4">RUC por Datos</button> -->
+        <button class="informes-tab-button" data-tab="tab4">Fecha Nacimiento por DNI</button>
       </div>
 
       <!-- Pestaña 1 -->
@@ -169,41 +169,57 @@
       </div>
 
       <!-- Pestaña 4 -->
-      <div id="tab4" class="informes-tab-content">
+      <div id="tab4" class="informes-tab-content ">
         <div class="informes-input-section">
           <div class="informes-input-group">
-            <label for="tab4-campo1">Seleccionar:</label>
-            <select id="tab4-campo1">
-              <option value="">Todos</option>
-              <option value="op1">Opción 1</option>
-              <option value="op2">Opción 2</option>
-            </select>
+            <label for="tab4-campo1">DNI:</label>
+            <input type="text" id="tab4-campo1" placeholder="Ingrese valor">
           </div>
-          <div class="informes-input-group">
-            <label for="tab4-campo2">Búsqueda:</label>
-            <input type="text" id="tab4-campo2" placeholder="Texto a buscar">
-          </div>
+          <!-- <div class="informes-input-group">
+        <label for="tab1-campo2">Campo 2:</label>
+        <input type="text" id="tab1-campo2" placeholder="Ingrese valor">
+      </div> -->
           <button class="informes-consultar-btn" data-tab="tab4">Consultar</button>
         </div>
 
-        <div class="informes-results-section">
-          <table id="tabla-resultados4" class="informes-results-table">
-            <thead>
-              <tr>
-                <th>Referencia</th>
-                <th>Cliente</th>
-                <th>Total</th>
-                <th>Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Resultados se llenarán aquí -->
-            </tbody>
-          </table>
+        <!-- <div class="informes-results-section">
+
+    </div> -->
+        <div class="informes-data-card ocultarClass" id="card-alerta-fecha">
+          <div class="informes-card-header informes-card-alert">
+            <h3>Respuesta:</h3>
+            <div class="informes-card-actions">
+              <button class="informes-card-btn delete-alert-btn" title="Imprimir">❌</button>
+            </div>
+          </div>
+        </div>
+        <div class="informes-results-section ">
+          <!-- Card en lugar de tabla -->
+          <div class="informes-data-card" id="card-resultados1">
+            <div class="informes-card-header">
+              <h3>Respuesta</h3>
+              <div class="informes-card-actions">
+                <button class="informes-card-btn informes-print-btn" title="Imprimir">
+                  <!-- <i class="fas fa-print">🖨️</i> --> 🖨️
+                </button>
+                <!-- <button class="informes-card-btn informes-download-btn" title="Descargar">
+              <i class="fas fa-download"></i>
+            </button> -->
+              </div>
+            </div>
+            <div class="informes-card-body" id="card-body-fecha">
+            </div>
+            <div class="informes-card-footer">
+              <span class="informes-timestamp"> -- Developed by CRJ<span id="card-consulta">--</span></span>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
+
+
 
   <div class="informes-loading-overlay" id="loadingOverlay">
     <div class="informes-loading-content">
