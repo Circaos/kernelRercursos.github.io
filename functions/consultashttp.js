@@ -1,13 +1,11 @@
-
-// const endPoint = "http://192.168.1.39:1333"
-const endPoint = "https://apiproviaspruebav1-production.up.railway.app"
+import {API_CONFIG} from "../config/config.js"
 
 /**
   *@param {string} dni  
   *@param {string} sessionCode  
 */
 export async function consultaDNI(dni,sessionCode) {
-  const response = await fetch(`${endPoint}/dni/postDNI`,{
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDNI`,{
     method: "POST",
     headers:{
       "Content-Type": "application/json"
@@ -27,7 +25,7 @@ export async function consultaDNI(dni,sessionCode) {
   *@param {string} sessionCode  
 */
 export async function consultaRUC(ruc,sessionCode) {
-  const response = await fetch(`${endPoint}/dni/postRUC`,{
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postRUC`,{
     method: "POST",
     headers:{
       "Content-Type": "application/json"
@@ -49,7 +47,7 @@ export async function consultaRUC(ruc,sessionCode) {
   *@param {string} sessionCode    
 */
 export async function consultaDniPorDatos(nombres, apellidoPaterno, apellidoMaterno,sessionCode) {
-  const response = await fetch(`${endPoint}/dni/postDatosDNI`,{
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDatosDNI`,{
     method: "POST",
     headers:{
       "Content-Type": "application/json"

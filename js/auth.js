@@ -1,3 +1,5 @@
+import {API_CONFIG} from "../config/config.js"
+
 document.getElementById("loginForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -9,7 +11,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   errorMessage.style.display = "none";
 
   // Simular llamada a la API (reemplazar con tu API real)
-  fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/login", {
+  fetch(`${API_CONFIG.BASE_URL}/webInt/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,3 +1,5 @@
+import {API_CONFIG} from "../config/config.js"
+
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
   const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
@@ -172,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingCell.style.textAlign = "center";
 
     // Simular llamada a la API (reemplazar con tu API real)
-    fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/getInfoFechaProviasSession", {
+    fetch(`${API_CONFIG.BASE_URL}/webInt/getInfoFechaProviasSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -254,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     showLoading();
-    fetch("https://apiproviaspruebav1-production.up.railway.app/webInt/getDataFiltradaSession", {
+    fetch(`${API_CONFIG.BASE_URL}/webInt/getDataFiltradaSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
