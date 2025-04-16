@@ -155,8 +155,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (responseDatosDNI.estatus == 200) {
           if (responseDatosDNI.data.message) {
             mostrarAlertaDniDatos(responseDatosDNI.data.message);
-          } else {
+          } else if(responseDatosDNI.data.error){
+            mostrarAlertaDniDatos(responseDatosDNI.data.error);
+          }else if(responseDatosDNI.data.resultados){
             rellenarTablaDniDatos(responseDatosDNI.data.resultados);
+          }else {
+            mostrarAlertaDniDatos("****Error*****");
           }
         } else if (responseDatosDNI.estatus == 300) {
           alert(`Error en Session, ${responseDatosDNI.mensaje}`);
