@@ -53,14 +53,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function pintadoTabla(listaEmpresas) {
     tablaResultados.innerHTML = "";
     listaEmpresas.forEach((item) => {
+
+      let linkIDDestino = `http://autorizacionesespeciales.proviasnac.gob.pe:8080/provias48a60tn/verFormDetalleSolicitudes48tn?idSol=${item.idSolicitud}`
+
       const row = tablaResultados.insertRow();
       row.insertCell(0).textContent = item.razonSocial || "-/-";
       row.insertCell(1).textContent = item.ruc || "-/-";
-      row.insertCell(2).textContent = item.idSolicitud || "-/-";
-      row.insertCell(3).textContent = item.origen || "-/-";
-      row.insertCell(4).textContent = item.destino || "-/-";
-      row.insertCell(5).textContent = item.fechaSalida || "-/-";
-      row.insertCell(6).textContent = item.fechaLLegada || "-/-";
+      // row.insertCell(2).textContent = item.idSolicitud || "-/-";
+      row.insertCell(2).textContent = item.origen || "-/-";
+      row.insertCell(3).textContent = item.destino || "-/-";
+      row.insertCell(4).textContent = item.fechaSalida || "-/-";
+      row.insertCell(5).textContent = item.fechaLLegada || "-/-";
+
+      let nuevoA = document.createElement("a")
+      nuevoA.href = linkIDDestino
+      nuevoA.target = "_blank"
+      nuevoA.textContent = "Ver en Provias"
+
+      row.insertCell(6).appendChild(nuevoA)
     });
   }
 
@@ -71,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const cabeceraNombreEmpresa = document.getElementById("nombreEmpresaID");
     const cabeceraRuc = document.getElementById("rucID");
-    const cabeceraIdSolicitud = document.getElementById("idSolicitudID");
+    // const cabeceraIdSolicitud = document.getElementById("idSolicitudID");
     const cabeceraOrigen = document.getElementById("origenID");
     const cabeceraDestino = document.getElementById("destinoID");
 
@@ -96,17 +106,17 @@ document.addEventListener("DOMContentLoaded", function () {
       cabeceraRuc.classList.remove("cabeceraFiltrada");
       cabeceraRuc.querySelector(".iconoCabeceraTabla").textContent = "🔎";
     }
-    if (filtro.idSolFilt != "") {
-      cabeceraIdSolicitud.classList.add("cabeceraFiltrada");
-      cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "❌";
-      dataFiltrada = dataFiltrada.filter(
-        (item) =>
-          item.idSolicitud.includes(filtro.idSolFilt) || item.idSolicitud.includes(filtro.idSolFilt.toUpperCase())
-      );
-    } else {
-      cabeceraIdSolicitud.classList.remove("cabeceraFiltrada");
-      cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "🔎";
-    }
+    // if (filtro.idSolFilt != "") {
+    //   cabeceraIdSolicitud.classList.add("cabeceraFiltrada");
+    //   cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "❌";
+    //   dataFiltrada = dataFiltrada.filter(
+    //     (item) =>
+    //       item.idSolicitud.includes(filtro.idSolFilt) || item.idSolicitud.includes(filtro.idSolFilt.toUpperCase())
+    //   );
+    // } else {
+    //   cabeceraIdSolicitud.classList.remove("cabeceraFiltrada");
+    //   cabeceraIdSolicitud.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    // }
     if (filtro.origen != "") {
       cabeceraOrigen.classList.add("cabeceraFiltrada");
       cabeceraOrigen.querySelector(".iconoCabeceraTabla").textContent = "❌";
@@ -341,9 +351,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "rucID":
         textoContenedor = filtroData.rucFilt
         break;
-      case "idSolicitudID":
-        textoContenedor = filtroData.idSolFilt
-        break;
+      // case "idSolicitudID":
+      //   textoContenedor = filtroData.idSolFilt
+      //   break;
       case "origenID":
         textoContenedor = filtroData.origen
         break;
@@ -402,10 +412,10 @@ document.addEventListener("DOMContentLoaded", function () {
         filtroData.rucFilt = e.target.value;
         filtrado(filtroData);
         break;
-      case "idSolicitudID":
-        filtroData.idSolFilt = e.target.value;
-        filtrado(filtroData);
-        break;
+      // case "idSolicitudID":
+      //   filtroData.idSolFilt = e.target.value;
+      //   filtrado(filtroData);
+      //   break;
       case "origenID":
         filtroData.origen = e.target.value;
         filtrado(filtroData);
@@ -444,9 +454,9 @@ document.addEventListener("DOMContentLoaded", function () {
           case "rucID":
             filtroData.rucFilt = "";
             break;
-          case "idSolicitudID":
-            filtroData.idSolFilt = "";
-            break;
+          // case "idSolicitudID":
+          //   filtroData.idSolFilt = "";
+          //   break;
           case "origenID":
             filtroData.origen = "";
             break;
