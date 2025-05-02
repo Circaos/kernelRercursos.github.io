@@ -1,5 +1,6 @@
 import { consultaDNI, consultaRUC,consultaDniPorDatos,consultaFechaNacimientoPorDni } from "../functions/consultashttp.js";
 import {PROJECT_CONFIG} from "../config/config.js"
+import {verificarSession} from "../functions/funcionesGenerales.js"
 
 document.addEventListener("DOMContentLoaded", function () {
   // Variables globales
@@ -8,24 +9,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   // Verificar sesión
-  if (!sessionCode || !horaSessionCode) {
-    alert("Sesión no válida. Redirigiendo al login...");
+  let rptVerificaSession = verificarSession(sessionCode,horaSessionCode)
+  if (!rptVerificaSession.status) {
+    alert(rptVerificaSession.mensaje)
     window.location.href = "index.html";
     return;
-  }else{
-    let horaGuardadaAsendida = new Date(horaSessionCode)
-    horaGuardadaAsendida.setMinutes(horaGuardadaAsendida.getMinutes() + PROJECT_CONFIG.RANGO_SESSION)
-    let horaAhora = new Date()
-
-    console.log(`Ahora ${horaAhora}`)
-    console.log(`RangoMaximo ${horaGuardadaAsendida}`)
-
-    if (horaGuardadaAsendida <= horaAhora) {
-      alert("Sesión expirada. Redirigiendo al login...");
-      // window.location.href = "index.html";
-      return;
-    }
   }
+
+  // if (!sessionCode || !horaSessionCode) {
+  //   alert("Sesión no válida. Redirigiendo al login...");
+  //   window.location.href = "index.html";
+  //   return;
+  // }else{
+  //   let horaGuardadaAsendida = new Date(horaSessionCode)
+  //   horaGuardadaAsendida.setMinutes(horaGuardadaAsendida.getMinutes() + PROJECT_CONFIG.RANGO_SESSION)
+  //   let horaAhora = new Date()
+
+  //   if (horaGuardadaAsendida <= horaAhora) {
+  //     alert("Sesión expirada. Redirigiendo al login...");
+  //     window.location.href = "index.html";
+  //     return;
+  //   }
+  // }
 
   
 

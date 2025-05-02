@@ -1,8 +1,9 @@
-import { API_CONFIG } from "../config/config.js";
+import { API_CONFIG, PROJECT_CONFIG } from "../config/config.js";
+import {verificarSession} from "../functions/funcionesGenerales.js"
 
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
-  const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
+  // const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
   const modalBtn = document.getElementById("modalBtn");
   const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
   const loadingOverlay = document.getElementById("loadingOverlay");
@@ -11,8 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   // Verificar sesión
-  if (!sessionCode || !horaSessionCode) {
-    alert("Sesión no válida. Redirigiendo al login...");
+  let rptVerificaSession = verificarSession(sessionCode,horaSessionCode)
+  if (!rptVerificaSession.status) {
+    alert(rptVerificaSession.mensaje)
     window.location.href = "index.html";
     return;
   }
@@ -45,16 +47,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Función para habilitar el botón "Obtener Información"
-  function enableInfoButton() {
-    obtenerInfoBtn.disabled = false;
-    obtenerInfoBtn.classList.add("enabled");
-  }
+  // function enableInfoButton() {
+  //   obtenerInfoBtn.disabled = false;
+  //   obtenerInfoBtn.classList.add("enabled");
+  // }
 
   // Función para deshabilitar el botón "Obtener Información"
-  function disableInfoButton() {
-    obtenerInfoBtn.disabled = true;
-    obtenerInfoBtn.classList.remove("enabled");
-  }
+  // function disableInfoButton() {
+  //   obtenerInfoBtn.disabled = true;
+  //   obtenerInfoBtn.classList.remove("enabled");
+  // }
 
   // Funcion Pintado Tabla
   /**
@@ -174,8 +176,11 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(`fechaInicio ${fechaInicioFormateada}`);
     console.log(`fechaFin ${fechaFinFormateada}`);
     console.log(`Sesion code ${sessionCode}`);
-    if (!sessionCode) {
-      alert("No cuenta con Session. Por favor inicie sesión.");
+
+    // Verificar sesión
+    let rptVerificaSession2 = verificarSession(sessionCode,horaSessionCode)
+    if (!rptVerificaSession2.status) {
+      alert(rptVerificaSession2.mensaje)
       window.location.href = "index.html";
       return;
     }
@@ -191,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingCell.textContent = "Cargando datos...";
     loadingCell.style.textAlign = "center";
 
-    // Simular llamada a la API (reemplazar con tu API real)
-    fetch(`${API_CONFIG.BASE_URL}/webInt/getInfoFechaProviasSession`, {
+    //llamada a la API
+    fetch(`${API_CONFIG.BASE_URL}/webInt/getDataFiltradaByFechasSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Limpiar mensaje de carga
 
         hideLoading();
-        allData = data.listaEmpresas;
+        allData = data.dataEncontrada;
 
         // console.log(data);
         if (data.estatus == 400) {
@@ -244,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //   row.insertCell(2).textContent = item.idSolicitud || "N/A";
         //   // row.insertCell(3).textContent = item.valor || 'N/A';
         // });
-        pintadoTabla(data.listaEmpresas);
+        pintadoTabla(data.dataEncontrada);
       })
       .catch((error) => {
         hideLoading();
@@ -259,80 +264,55 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  obtenerInfoBtn.addEventListener("click", function () {
-    if (!allData || allData.length === 0) return;
-    const sessionCode = localStorage.getItem("sessionCode");
-    // Ejemplo alternativo: Mostrar resumen de información
-    // const totalItems = allData.length;
+  // obtenerInfoBtn.addEventListener("click", function () {
+  //   if (!allData || allData.length === 0) return;
+  //   const sessionCode = localStorage.getItem("sessionCode");
+    
+  //   if (allData.length > 200) {
+  //     alert(`La consulta es muy costosa, ajuste las fechas`);
+  //     return;
+  //   }
 
-    // console.log(allData);
+  //   showLoading();
+  //   fetch(`${API_CONFIG.BASE_URL}/webInt/getDataFiltradaSession`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // 'Authorization': `Bearer ${sessionCode}`
+  //     },
+  //     body: JSON.stringify({
+  //       listaEmpresas: allData,
+  //       sessionCode: sessionCode,
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Error en la consulta");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
 
-    // alert(`Información obtenida:\n\n- Total de registros: ${totalItems}\n- Fecha inicial: ${firstDate}\n- Fecha final: ${lastDate}`);
-    if (allData.length > 200) {
-      alert(`La consulta es muy costosa, ajuste las fechas`);
-      return;
-    }
+  //       hideLoading();
 
-    showLoading();
-    fetch(`${API_CONFIG.BASE_URL}/webInt/getDataFiltradaSession`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Authorization': `Bearer ${sessionCode}`
-      },
-      body: JSON.stringify({
-        listaEmpresas: allData,
-        sessionCode: sessionCode,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error en la consulta");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Limpiar mensaje de carga
+  //       allData = data.dataEncontrada;
 
-        hideLoading();
+  //       console.log(data);
+  //       pintadoTabla(allData);
 
-        allData = data.dataEncontrada;
-
-        console.log(data);
-        pintadoTabla(allData);
-        // if (data.estatus == 400) {
-        //   alert(`Error en Session, ${data.mensaje}`);
-        //   window.location.href = "index.html";
-        //   return;
-        // }
-
-        // tablaResultados.innerHTML = "";
-
-        // if (data.length === 0) {
-        //   const emptyRow = tablaResultados.insertRow();
-        //   const emptyCell = emptyRow.insertCell(0);
-        //   emptyCell.colSpan = 4;
-        //   emptyCell.textContent = "No se encontraron resultados";
-        //   emptyCell.style.textAlign = "center";
-        //   return;
-        // }
-
-        // enableInfoButton();
-
-        // pintadoTabla(data.listaEmpresas);
-      })
-      .catch((error) => {
-        hideLoading();
-        disableInfoButton();
-        tablaResultados.innerHTML = "";
-        const errorRow = tablaResultados.insertRow();
-        const errorCell = errorRow.insertCell(0);
-        errorCell.colSpan = 4;
-        errorCell.textContent = "Error: " + error.message;
-        errorCell.style.textAlign = "center";
-        errorCell.style.color = "red";
-      });
-  });
+  //     })
+  //     .catch((error) => {
+  //       hideLoading();
+  //       disableInfoButton();
+  //       tablaResultados.innerHTML = "";
+  //       const errorRow = tablaResultados.insertRow();
+  //       const errorCell = errorRow.insertCell(0);
+  //       errorCell.colSpan = 4;
+  //       errorCell.textContent = "Error: " + error.message;
+  //       errorCell.style.textAlign = "center";
+  //       errorCell.style.color = "red";
+  //     });
+  // });
 
   // Elementos para el modal
   const modal = document.getElementById("myModal");
