@@ -35,6 +35,9 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         console.log(data.sessionCode);
         localStorage.setItem("sessionCode", data.sessionCode);
 
+        let hoy = new Date()
+        localStorage.setItem("horaSessionCode",hoy.toISOString())
+
         // Redirigir al dashboard
         window.location.href = "dashboard.html";
       } else {

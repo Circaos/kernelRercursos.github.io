@@ -1,16 +1,34 @@
 import { consultaDNI, consultaRUC,consultaDniPorDatos,consultaFechaNacimientoPorDni } from "../functions/consultashttp.js";
+import {PROJECT_CONFIG} from "../config/config.js"
 
 document.addEventListener("DOMContentLoaded", function () {
   // Variables globales
   const loadingOverlay = document.getElementById("loadingOverlay");
   const sessionCode = localStorage.getItem("sessionCode");
+  const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   // Verificar sesión
-  if (!sessionCode) {
+  if (!sessionCode || !horaSessionCode) {
     alert("Sesión no válida. Redirigiendo al login...");
     window.location.href = "index.html";
     return;
+  }else{
+    let horaGuardadaAsendida = new Date(horaSessionCode)
+    horaGuardadaAsendida.setMinutes(horaGuardadaAsendida.getMinutes() + PROJECT_CONFIG.RANGO_SESSION)
+    let horaAhora = new Date()
+
+    console.log(`Ahora ${horaAhora}`)
+    console.log(`RangoMaximo ${horaGuardadaAsendida}`)
+
+    if (horaGuardadaAsendida <= horaAhora) {
+      alert("Sesión expirada. Redirigiendo al login...");
+      // window.location.href = "index.html";
+      return;
+    }
   }
+
+  
+
 
   // Mostrar/Ocultar spinner
   function showLoading() {

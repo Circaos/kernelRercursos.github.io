@@ -1,4 +1,4 @@
-import {API_CONFIG} from "../config/config.js"
+import { API_CONFIG } from "../config/config.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalBtn = document.getElementById("modalBtn");
   const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
   const loadingOverlay = document.getElementById("loadingOverlay");
+
+  const sessionCode = localStorage.getItem("sessionCode");
+  const horaSessionCode = localStorage.getItem("horaSessionCode");
+
+  // Verificar sesión
+  if (!sessionCode || !horaSessionCode) {
+    alert("Sesión no válida. Redirigiendo al login...");
+    window.location.href = "index.html";
+    return;
+  }
 
   // Variables
   /**
@@ -53,8 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function pintadoTabla(listaEmpresas) {
     tablaResultados.innerHTML = "";
     listaEmpresas.forEach((item) => {
-
-      let linkIDDestino = `http://autorizacionesespeciales.proviasnac.gob.pe:8080/provias48a60tn/verFormDetalleSolicitudes48tn?idSol=${item.idSolicitud}`
+      let linkIDDestino = `http://autorizacionesespeciales.proviasnac.gob.pe:8080/provias48a60tn/verFormDetalleSolicitudes48tn?idSol=${item.idSolicitud}`;
 
       const row = tablaResultados.insertRow();
       row.insertCell(0).textContent = item.razonSocial || "-/-";
@@ -65,12 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
       row.insertCell(4).textContent = item.fechaSalida || "-/-";
       row.insertCell(5).textContent = item.fechaLLegada || "-/-";
 
-      let nuevoA = document.createElement("a")
-      nuevoA.href = linkIDDestino
-      nuevoA.target = "_blank"
-      nuevoA.textContent = "Ver en Provias"
+      let nuevoA = document.createElement("a");
+      nuevoA.href = linkIDDestino;
+      nuevoA.target = "_blank";
+      nuevoA.textContent = "Ver en Provias";
 
-      row.insertCell(6).appendChild(nuevoA)
+      row.insertCell(6).appendChild(nuevoA);
     });
   }
 
@@ -84,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // const cabeceraIdSolicitud = document.getElementById("idSolicitudID");
     const cabeceraOrigen = document.getElementById("origenID");
     const cabeceraDestino = document.getElementById("destinoID");
-
 
     if (filtro.RsFilt != "") {
       cabeceraNombreEmpresa.classList.add("cabeceraFiltrada");
@@ -261,10 +269,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // alert(`Información obtenida:\n\n- Total de registros: ${totalItems}\n- Fecha inicial: ${firstDate}\n- Fecha final: ${lastDate}`);
     if (allData.length > 200) {
-      alert(`La consulta es muy costosa, ajuste las fechas`)
-      return
+      alert(`La consulta es muy costosa, ajuste las fechas`);
+      return;
     }
-    
+
     showLoading();
     fetch(`${API_CONFIG.BASE_URL}/webInt/getDataFiltradaSession`, {
       method: "POST",
@@ -343,27 +351,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const label = document.querySelector("#input-group-modal > label");
     label.textContent = `Filtrar ${nombreModal}`;
 
-    let textoContenedor = ""
+    let textoContenedor = "";
     switch (varID) {
       case "nombreEmpresaID":
-        textoContenedor = filtroData.RsFilt
+        textoContenedor = filtroData.RsFilt;
         break;
       case "rucID":
-        textoContenedor = filtroData.rucFilt
+        textoContenedor = filtroData.rucFilt;
         break;
       // case "idSolicitudID":
       //   textoContenedor = filtroData.idSolFilt
       //   break;
       case "origenID":
-        textoContenedor = filtroData.origen
+        textoContenedor = filtroData.origen;
         break;
       case "destinoID":
-        textoContenedor = filtroData.destino
+        textoContenedor = filtroData.destino;
         break;
       default:
         break;
     }
-    textoModal.value = textoContenedor
+    textoModal.value = textoContenedor;
 
     textoModal.focus();
   }
