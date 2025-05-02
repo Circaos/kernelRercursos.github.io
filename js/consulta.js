@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Inicialmente deshabilitar el botón
-  disableInfoButton();
+  // disableInfoButton();
 
   consultarBtn.addEventListener("click", function () {
     const fechaInicio = document.getElementById("fechaInicio").value;
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    disableInfoButton();
+    // disableInfoButton();
     allData = [];
 
     const fechaInicioPartes = fechaInicio.split("-");
@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        enableInfoButton();
+        // enableInfoButton();
 
         // Llenar la tabla con los resultados
         // data.listaEmpresas.forEach((item) => {
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         hideLoading();
-        disableInfoButton();
+        // disableInfoButton();
         tablaResultados.innerHTML = "";
         const errorRow = tablaResultados.insertRow();
         const errorCell = errorRow.insertCell(0);
