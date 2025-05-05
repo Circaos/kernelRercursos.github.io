@@ -1,6 +1,48 @@
 import {API_CONFIG} from "../config/config.js"
 
 /**
+ * @param {string} codigo 
+ * @param {string} sessionCode 
+ */
+export async function leerMensajeTransimision(codigo,sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_LEER}`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      code: codigo,
+      sessionCode: sessionCode,
+    }),
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * @param {string} codigo 
+ * @param {string} mensaje 
+ * @param {string} sessionCode 
+ */
+export async function enviarMensajeTransimision(codigo,mensaje,sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_ADD}`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      code: codigo,
+      mensaje: mensaje,
+      sessionCode: sessionCode,
+    }),
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
   *@param {string} dni  
   *@param {string} sessionCode  
 */

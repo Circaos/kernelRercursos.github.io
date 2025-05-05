@@ -5,6 +5,8 @@ export const API_CONFIG = {
   ENDPOINTS: {
     GET_INFO_FECHA: "/webInt/getInfoFechaProviasSession",
     GET_DATA_FILTRADA: "/webInt/getDataFiltradaSession",
+    GET_TRANSMISION_ADD: "/webInt/addMensaje",
+    GET_TRANSMISION_LEER: "/webInt/leerMensaje",
   },
 };
 
