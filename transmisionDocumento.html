@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transmision Documento</title>
+    <link rel="stylesheet" href="/css/transmisionDocumento.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Transmision Documento</h1>
+        <form id="documentForm">
+            <!-- <div class="form-group">
+                <label for="chatId">ID de Chat:</label>
+                <input type="text" id="chatId" required placeholder="Ej: 123456789">
+            </div> -->
+            
+            <div class="form-group">
+                <label for="document">Seleccionar Documento:</label>
+                <input type="file" id="document" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="caption">Descripción (opcional):</label>
+                <textarea id="caption" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" id="sendButton">Enviar Documento</button>
+        </form>
+        
+        <div id="status"></div>
+        <div id="qrCode"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script type="module" src="/js/tranmisionDocumento.js"></script>
+</body>
+</html>
