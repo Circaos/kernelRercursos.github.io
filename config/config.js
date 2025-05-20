@@ -11,5 +11,5 @@ export const API_CONFIG = {
 };
 
 export const PROJECT_CONFIG = {
-  RANGO_SESSION: 120
+  RANGO_SESSION: 700
 }
