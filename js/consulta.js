@@ -1,5 +1,5 @@
 import { API_CONFIG, PROJECT_CONFIG } from "../config/config.js";
-import {verificarSession} from "../functions/funcionesGenerales.js"
+import { verificarSession } from "../functions/funcionesGenerales.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
@@ -12,26 +12,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   // Verificar sesión
-  let rptVerificaSession = verificarSession(sessionCode,horaSessionCode)
+  let rptVerificaSession = verificarSession(sessionCode, horaSessionCode);
   if (!rptVerificaSession.status) {
-    alert(rptVerificaSession.mensaje)
+    alert(rptVerificaSession.mensaje);
     window.location.href = "index.html";
     return;
   }
 
   // Variables
   /**
-   * @type {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string}>}
+   * @type {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string,tractoPlaca:string,camaBajaPlaca:string}>}
    */
   let allData = [];
 
-  /** @type {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string}} */
+  /** @type {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string}} */
   let filtroData = {
     RsFilt: "",
     rucFilt: "",
     idSolFilt: "",
     origen: "",
     destino: "",
+    tractoPlaca: "",
+    camaBajaPlaca: "",
   };
 
   let varID = "";
@@ -76,12 +78,16 @@ document.addEventListener("DOMContentLoaded", function () {
       row.insertCell(4).textContent = item.fechaSalida || "-/-";
       row.insertCell(5).textContent = item.fechaLLegada || "-/-";
 
+      row.insertCell(6).textContent = item.tractoPlaca || "-/-";
+      row.insertCell(7).textContent = item.camaBajaPlaca || "-/-";
+      row.insertCell(8).textContent = item.carga || "-/-";
+
       let nuevoA = document.createElement("a");
       nuevoA.href = linkIDDestino;
       nuevoA.target = "_blank";
       nuevoA.textContent = "Ver en Provias";
 
-      row.insertCell(6).appendChild(nuevoA);
+      row.insertCell(9).appendChild(nuevoA);
     });
   }
 
@@ -178,9 +184,9 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(`Sesion code ${sessionCode}`);
 
     // Verificar sesión
-    let rptVerificaSession2 = verificarSession(sessionCode,horaSessionCode)
+    let rptVerificaSession2 = verificarSession(sessionCode, horaSessionCode);
     if (!rptVerificaSession2.status) {
-      alert(rptVerificaSession2.mensaje)
+      alert(rptVerificaSession2.mensaje);
       window.location.href = "index.html";
       return;
     }
@@ -267,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // obtenerInfoBtn.addEventListener("click", function () {
   //   if (!allData || allData.length === 0) return;
   //   const sessionCode = localStorage.getItem("sessionCode");
-    
+
   //   if (allData.length > 200) {
   //     alert(`La consulta es muy costosa, ajuste las fechas`);
   //     return;

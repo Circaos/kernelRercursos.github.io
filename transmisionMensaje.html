@@ -8,6 +8,14 @@
 </head>
 <body>
     <div class="container">
+        <div class="informes-data-card " id="card-alerta">
+            <div class="informes-card-header informes-card-alert">
+                <h3>Respuesta:</h3>
+                <div class="informes-card-actions">
+                    <button class="informes-card-btn delete-alert-btn" >❌</button>
+                </div>
+            </div>
+        </div>
         <div class="input-container">
             <input type="text" id="text-input" maxlength="5" placeholder="Code...">
             <button id="enviar-button" class="submit-button">Enviar</button>
@@ -15,6 +23,15 @@
         </div>
         <textarea id="text-area" placeholder="Este es un área de texto grande..."></textarea>
     </div>
+
+  <div class="informes-loading-overlay" id="loadingOverlay">
+    <div class="informes-loading-content">
+      <div class="informes-spinner"></div>
+      <div class="informes-loading-text">Cargando datos...</div>
+    </div>
+  </div>
+
     <script type="module" src="js/transmisionMensajes.js"></script>
 </body>
+
 </html>

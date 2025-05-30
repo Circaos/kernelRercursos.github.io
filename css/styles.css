@@ -47,7 +47,7 @@ body {
 }
 
 .input-group input {
-  width: 100%;
+  /* width: 100%; */
   padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -127,7 +127,7 @@ body {
 /* Estilos para la vista de consulta */
 .consulta-container {
   padding: 2rem;
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 

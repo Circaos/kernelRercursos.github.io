@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnLeer = document.getElementById("leer-button");
   const taArea = document.getElementById("text-area");
   const tiImput = document.getElementById("text-input");
+  const cardAlerta = document.getElementById("card-alerta");
+  const loadingOverlay = document.getElementById("loadingOverlay");
 
   const sessionCode = localStorage.getItem("sessionCode");
   const horaSessionCode = localStorage.getItem("horaSessionCode");
@@ -34,6 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
         codigo: texto
       }
     }
+  }
+  // Mostrar/Ocultar spinner
+  function showLoading() {
+    loadingOverlay.style.display = "flex";
+  }
+
+  function hideLoading() {
+    loadingOverlay.style.display = "none";
   }
 
   // Botones
