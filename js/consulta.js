@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Funcion de filtrado
-  /**@param {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string}} filtro  */
+  /**@param {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string}} filtro  */
   function filtrado(filtro) {
     let dataFiltrada = allData;
 
@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // const cabeceraIdSolicitud = document.getElementById("idSolicitudID");
     const cabeceraOrigen = document.getElementById("origenID");
     const cabeceraDestino = document.getElementById("destinoID");
+    const cabeceraCamaBaja = document.getElementById("placaCamaBajaID");
+    const cabeceraTracto = document.getElementById("placaTractoID");
 
     if (filtro.RsFilt != "") {
       cabeceraNombreEmpresa.classList.add("cabeceraFiltrada");
@@ -152,6 +154,26 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       cabeceraDestino.classList.remove("cabeceraFiltrada");
       cabeceraDestino.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.tractoPlaca != "") {
+      cabeceraTracto.classList.add("cabeceraFiltrada");
+      cabeceraTracto.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.tractoPlaca.includes(filtro.tractoPlaca) || item.tractoPlaca.includes(filtro.tractoPlaca.toUpperCase())
+      );
+    } else {
+      cabeceraTracto.classList.remove("cabeceraFiltrada");
+      cabeceraTracto.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.camaBajaPlaca != "") {
+      cabeceraCamaBaja.classList.add("cabeceraFiltrada");
+      cabeceraCamaBaja.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.camaBajaPlaca.includes(filtro.camaBajaPlaca) || item.camaBajaPlaca.includes(filtro.camaBajaPlaca.toUpperCase())
+      );
+    } else {
+      cabeceraCamaBaja.classList.remove("cabeceraFiltrada");
+      cabeceraCamaBaja.querySelector(".iconoCabeceraTabla").textContent = "🔎";
     }
 
     pintadoTabla(dataFiltrada);
@@ -354,6 +376,12 @@ document.addEventListener("DOMContentLoaded", function () {
       case "destinoID":
         textoContenedor = filtroData.destino;
         break;
+      case "placaCamaBajaID":
+        textoContenedor = filtroData.camaBajaPlaca;
+        break;
+      case "placaTractoID":
+        textoContenedor = filtroData.tractoPlaca;
+        break;
       default:
         break;
     }
@@ -418,6 +446,14 @@ document.addEventListener("DOMContentLoaded", function () {
         filtroData.destino = e.target.value;
         filtrado(filtroData);
         break;
+      case "placaTractoID":
+        filtroData.tractoPlaca = e.target.value;
+        filtrado(filtroData);
+        break;
+      case "placaCamaBajaID":
+        filtroData.camaBajaPlaca = e.target.value;
+        filtrado(filtroData);
+        break;
       default:
         break;
     }
@@ -439,7 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (e.target.matches(".iconoCabeceraTabla")) {
       console.log("Se hizo click al iconoCabeceraTabla");
       let idParent = e.target.parentElement.id;
-
+      console.log(idParent);
       if (e.target.textContent == "❌") {
         switch (idParent) {
           case "nombreEmpresaID":
@@ -457,10 +493,21 @@ document.addEventListener("DOMContentLoaded", function () {
           case "destinoID":
             filtroData.destino = "";
             break;
+          case "placaTractoID":
+            filtroData.tractoPlaca = "";
+            break;
+          case "placaCamaBajaID":
+            filtroData.camaBajaPlaca = "";
+            break;
           default:
             break;
         }
         filtrado(filtroData);
+      } else if (e.target.textContent == "🔎") {
+        varID = e.target.parentElement.id;
+        let padre = e.target.parentElement;
+        let contenido = padre.querySelector("div.cabeceraTabla").textContent;
+        mostrarModal(contenido);
       }
     }
     // mostrarModal(e.target.textContent);
