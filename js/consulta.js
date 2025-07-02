@@ -2,6 +2,10 @@ import { API_CONFIG, PROJECT_CONFIG } from "../config/config.js";
 import { verificarSession } from "../functions/funcionesGenerales.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+
+
+
   const consultarBtn = document.getElementById("consultarBtn");
   // const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
   const modalBtn = document.getElementById("modalBtn");
