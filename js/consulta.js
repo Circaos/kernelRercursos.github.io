@@ -25,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Variables
   /**
-   * @type {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string,tractoPlaca:string,camaBajaPlaca:string}>}
+   * @type {Array<{razonSocial: string, ruc: string, idSolicitud: string, origen: string, destino: string, fechaSalida: string, fechaLLegada: string,tractoPlaca:string,camaBajaPlaca:string,carga:string}>}
    */
   let allData = [];
 
-  /** @type {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string}} */
+  /** @type {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string,carga:string}} */
   let filtroData = {
     RsFilt: "",
     rucFilt: "",
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     destino: "",
     tractoPlaca: "",
     camaBajaPlaca: "",
+    carga: "",
   };
 
   let varID = "";
@@ -96,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Funcion de filtrado
-  /**@param {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string}} filtro  */
+  /**@param {{RsFilt: string, rucFilt: string, idSolFilt: string, origen: string, destino: string,tractoPlaca:string,camaBajaPlaca:string,carga:string}} filtro  */
   function filtrado(filtro) {
     let dataFiltrada = allData;
 
@@ -107,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cabeceraDestino = document.getElementById("destinoID");
     const cabeceraCamaBaja = document.getElementById("placaCamaBajaID");
     const cabeceraTracto = document.getElementById("placaTractoID");
+    const cabeceraCarga = document.getElementById("cargaID");
 
     if (filtro.RsFilt != "") {
       cabeceraNombreEmpresa.classList.add("cabeceraFiltrada");
@@ -178,6 +180,16 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       cabeceraCamaBaja.classList.remove("cabeceraFiltrada");
       cabeceraCamaBaja.querySelector(".iconoCabeceraTabla").textContent = "🔎";
+    }
+    if (filtro.carga != "") {
+      cabeceraCarga.classList.add("cabeceraFiltrada");
+      cabeceraCarga.querySelector(".iconoCabeceraTabla").textContent = "❌";
+      dataFiltrada = dataFiltrada.filter(
+        (item) => item.carga.includes(filtro.carga) || item.carga.includes(filtro.carga.toUpperCase())
+      );
+    } else {
+      cabeceraCarga.classList.remove("cabeceraFiltrada");
+      cabeceraCarga.querySelector(".iconoCabeceraTabla").textContent = "🔎";
     }
 
     pintadoTabla(dataFiltrada);
@@ -393,6 +405,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "placaTractoID":
         textoContenedor = filtroData.tractoPlaca;
         break;
+      case "cargaID":
+        textoContenedor = filtroData.carga;
+        break;
       default:
         break;
     }
@@ -465,6 +480,10 @@ document.addEventListener("DOMContentLoaded", function () {
         filtroData.camaBajaPlaca = e.target.value;
         filtrado(filtroData);
         break;
+      case "cargaID":
+        filtroData.carga = e.target.value;
+        filtrado(filtroData);
+        break;
       default:
         break;
     }
@@ -509,6 +528,9 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
           case "placaCamaBajaID":
             filtroData.camaBajaPlaca = "";
+            break;
+          case "cargaID":
+            filtroData.carga = "";
             break;
           default:
             break;
