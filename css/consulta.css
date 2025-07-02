@@ -380,7 +380,7 @@ tbody tr:hover {
   
   table {
     display: block;
-    overflow-x: auto;
+    /* overflow-x: auto; */
     /* white-space: nowrap; */
   }
   
