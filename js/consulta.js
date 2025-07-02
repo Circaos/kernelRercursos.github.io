@@ -355,7 +355,8 @@ document.addEventListener("DOMContentLoaded", function () {
    * @param {String} nombreModal - Este parámetro debe ser un array.
    */
   function mostrarModal(nombreModal) {
-    modal.style.display = "flex"; // Mostrar modal
+    // modal.style.display = "flex"; // Mostrar modal
+    modal.classList.add("show")
     const label = document.querySelector("#input-group-modal > label");
     label.textContent = `Filtrar ${nombreModal}`;
 
@@ -392,7 +393,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Funcion ocultar Modal
   function ocultarModal() {
-    modal.style.display = "none";
+    // modal.style.display = "none";
+    modal.classList.remove("show")
   }
 
   // modalBtn.addEventListener("click", function () {
@@ -408,19 +410,22 @@ document.addEventListener("DOMContentLoaded", function () {
   okBtn.addEventListener("click", () => {
     const text = document.getElementById("modalTextarea").value;
     console.log("Texto ingresado:", text); // Puedes hacer algo con el texto
-    modal.style.display = "none";
+    // modal.style.display = "none";
+    ocultarModal()
   });
 
   // Cerrar modal al hacer clic en Cancelar
   cancelBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+    // modal.style.display = "none";
+    ocultarModal()
   });
 
   // Cerrar modal al hacer clic fuera del contenido
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       // Si se hace clic en el fondo oscuro
-      modal.style.display = "none";
+      // modal.style.display = "none";
+      ocultarModal()
     }
   });
 

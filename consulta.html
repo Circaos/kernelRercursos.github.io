@@ -5,9 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consulta por Fechas</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/modal.css">
-  <link rel="stylesheet" href="css/cabecera.css">
+  <link rel="stylesheet" href="css/consulta.css" />
+  <!-- <link rel="stylesheet" href="css/styles.css" /> -->
+  <!-- <link rel="stylesheet" href="css/modal.css"> -->
+  <!-- <link rel="stylesheet" href="css/cabecera.css"> -->
 </head>
 
 <body>
@@ -30,59 +31,61 @@
     </div> 
 
     <div class="results-table">
-      <table id="resultadosTable">
-        <thead>
-          <tr>
-            <th id="nombreEmpresaID">
-              <div class="cabeceraTabla">Nombre Empresa</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-            <th id="rucID">
-              <div class="cabeceraTabla">Ruc</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-            <!-- <th id="idSolicitudID">
-              <div class="cabeceraTabla">IdSolicitud</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th> -->
-            <th id="origenID">
-              <div class="cabeceraTabla">Origen</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-            <th id="destinoID">
-              <div class="cabeceraTabla">Destino</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-            <th id="fechaSalidaID">
-              <div class="cabeceraTabla">Fecha Salida</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-            <th id="fechaLlegadaID">
-              <div class="cabeceraTabla">Fecha Llegada</div>
-              <div class="iconoCabeceraTabla">🔎</div>
-            </th>
-             <th id="placaTractoID">
-              <div class="cabeceraTabla">Placa Tracto</div>
-              <div class="iconoCabeceraTabla">-</div>
-            </th>
-             <th id="placaCamaBajaID">
-              <div class="cabeceraTabla">Placa Cama Baja</div>
-              <div class="iconoCabeceraTabla">-</div>
-            </th>
-             <th id="cargaID">
-              <div class="cabeceraTabla">Carga</div>
-              <div class="iconoCabeceraTabla">-</div>
-            </th>
-            <th id="LinkID">
-              <div class="cabeceraTabla">Link -</div>
-              <div class="iconoCabeceraTabla">📎</div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Los resultados se llenarán aquí -->
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table id="resultadosTable">
+          <thead>
+            <tr>
+              <th id="nombreEmpresaID">
+                <div class="cabeceraTabla">Nombre Empresa</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+              <th id="rucID">
+                <div class="cabeceraTabla">Ruc</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+              <!-- <th id="idSolicitudID">
+                <div class="cabeceraTabla">IdSolicitud</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th> -->
+              <th id="origenID">
+                <div class="cabeceraTabla">Origen</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+              <th id="destinoID">
+                <div class="cabeceraTabla">Destino</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+              <th id="fechaSalidaID">
+                <div class="cabeceraTabla">Fecha Salida</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+              <th id="fechaLlegadaID">
+                <div class="cabeceraTabla">Fecha Llegada</div>
+                <div class="iconoCabeceraTabla">🔎</div>
+              </th>
+               <th id="placaTractoID">
+                <div class="cabeceraTabla">Pl Tracto</div>
+                <div class="iconoCabeceraTabla">-</div>
+              </th>
+               <th id="placaCamaBajaID">
+                <div class="cabeceraTabla">Pl Cama Baja</div>
+                <div class="iconoCabeceraTabla">-</div>
+              </th>
+               <th id="cargaID">
+                <div class="cabeceraTabla">Carga</div>
+                <div class="iconoCabeceraTabla">-</div>
+              </th>
+              <th id="LinkID">
+                <div class="cabeceraTabla">Link -</div>
+                <div class="iconoCabeceraTabla">📎</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Los resultados se llenarán aquí -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
