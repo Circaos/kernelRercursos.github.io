@@ -359,8 +359,8 @@ document.addEventListener("DOMContentLoaded", function () {
    * @param {String} nombreModal - Este parámetro debe ser un array.
    */
   function mostrarModal(nombreModal) {
-    // modal.style.display = "flex"; // Mostrar modal
-    modal.classList.add("show")
+    modal.style.display = "flex"; // Mostrar modal
+    // modal.classList.add("show")
     const label = document.querySelector("#input-group-modal > label");
     label.textContent = `Filtrar ${nombreModal}`;
 
@@ -397,8 +397,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Funcion ocultar Modal
   function ocultarModal() {
-    // modal.style.display = "none";
-    modal.classList.remove("show")
+    modal.style.display = "none";
+    // modal.classList.remove("show")
   }
 
   // modalBtn.addEventListener("click", function () {
