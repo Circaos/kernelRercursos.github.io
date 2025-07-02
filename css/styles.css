@@ -261,6 +261,9 @@ tr:hover {
   background-color: #27ae60;
 }
 
+.cabeceraTabla{
+  text-transform: uppercase;
+}
 /* Media queries para móviles */
 @media (max-width: 768px) {
   .login-box {

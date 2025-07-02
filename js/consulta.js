@@ -354,13 +354,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const cabeceras = document.getElementById("resultadosTable");
   const textoModal = document.getElementById("modalTextarea");
 
+  // Funcion ocultar Modal
+  function ocultarModal() {
+    // modal.style.display = "none";
+    modal.classList.remove("show")
+  }
+
   // Funcion mostrar Modal
   /**
    * @param {String} nombreModal - Este parámetro debe ser un array.
    */
   function mostrarModal(nombreModal) {
-    modal.style.display = "flex"; // Mostrar modal
-    // modal.classList.add("show")
+    // modal.style.display = "flex"; // Mostrar modal
+    modal.classList.add("show")
     const label = document.querySelector("#input-group-modal > label");
     label.textContent = `Filtrar ${nombreModal}`;
 
@@ -395,11 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textoModal.focus();
   }
 
-  // Funcion ocultar Modal
-  function ocultarModal() {
-    modal.style.display = "none";
-    // modal.classList.remove("show")
-  }
+
 
   // modalBtn.addEventListener("click", function () {
   //   mostrarModal("Holi");
