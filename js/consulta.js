@@ -531,6 +531,7 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
           case "cargaID":
             filtroData.carga = "";
+            
             break;
           default:
             break;
