@@ -2,15 +2,12 @@ import { API_CONFIG, PROJECT_CONFIG } from "../config/config.js";
 import { verificarSession } from "../functions/funcionesGenerales.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-
-
-
-
   const consultarBtn = document.getElementById("consultarBtn");
   // const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
   const modalBtn = document.getElementById("modalBtn");
   const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
   const loadingOverlay = document.getElementById("loadingOverlay");
+  const botonDescargaExcel = document.getElementById("botonDescargaExcel");
 
   const sessionCode = localStorage.getItem("sessionCode");
   const horaSessionCode = localStorage.getItem("horaSessionCode");
@@ -165,7 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
       cabeceraTracto.classList.add("cabeceraFiltrada");
       cabeceraTracto.querySelector(".iconoCabeceraTabla").textContent = "❌";
       dataFiltrada = dataFiltrada.filter(
-        (item) => item.tractoPlaca.includes(filtro.tractoPlaca) || item.tractoPlaca.includes(filtro.tractoPlaca.toUpperCase())
+        (item) =>
+          item.tractoPlaca.includes(filtro.tractoPlaca) || item.tractoPlaca.includes(filtro.tractoPlaca.toUpperCase())
       );
     } else {
       cabeceraTracto.classList.remove("cabeceraFiltrada");
@@ -175,7 +173,9 @@ document.addEventListener("DOMContentLoaded", function () {
       cabeceraCamaBaja.classList.add("cabeceraFiltrada");
       cabeceraCamaBaja.querySelector(".iconoCabeceraTabla").textContent = "❌";
       dataFiltrada = dataFiltrada.filter(
-        (item) => item.camaBajaPlaca.includes(filtro.camaBajaPlaca) || item.camaBajaPlaca.includes(filtro.camaBajaPlaca.toUpperCase())
+        (item) =>
+          item.camaBajaPlaca.includes(filtro.camaBajaPlaca) ||
+          item.camaBajaPlaca.includes(filtro.camaBajaPlaca.toUpperCase())
       );
     } else {
       cabeceraCamaBaja.classList.remove("cabeceraFiltrada");
@@ -198,7 +198,28 @@ document.addEventListener("DOMContentLoaded", function () {
   // Inicialmente deshabilitar el botón
   // disableInfoButton();
 
+  botonDescargaExcel.addEventListener("click", function () {
+    try {
+      // Convertir tabla a workbook de Excel
+      const workbook = XLSX.utils.table_to_book(cabeceras);
+
+      // Opciones adicionales (puedes personalizar)
+      const opciones = {
+        bookType: "xlsx", // Puedes usar 'xls' para formato más antiguo
+        compression: true, // Comprimir el archivo resultante
+      };
+
+      // Generar y descargar el archivo
+      XLSX.writeFile(workbook, "datos_descargados.xlsx", opciones);
+    } catch (error) {
+      console.error("Error al exportar a Excel:", error);
+    }
+  });
+
   consultarBtn.addEventListener("click", function () {
+
+    ocultarDescarga()
+
     const fechaInicio = document.getElementById("fechaInicio").value;
     const fechaFin = document.getElementById("fechaFin").value;
     const sessionCode = localStorage.getItem("sessionCode");
@@ -269,6 +290,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.estatus == 400) {
           alert(`Error en Session, ${data.mensaje}`);
           window.location.href = "index.html";
+
+          ocultarDescarga()
           return;
         }
 
@@ -280,7 +303,10 @@ document.addEventListener("DOMContentLoaded", function () {
           emptyCell.colSpan = 4;
           emptyCell.textContent = "No se encontraron resultados";
           emptyCell.style.textAlign = "center";
+          ocultarDescarga()
           return;
+        }else{
+          mostrarDescarga()
         }
 
         // enableInfoButton();
@@ -297,6 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         hideLoading();
+        ocultarDescarga()
         // disableInfoButton();
         tablaResultados.innerHTML = "";
         const errorRow = tablaResultados.insertRow();
@@ -366,10 +393,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const cabeceras = document.getElementById("resultadosTable");
   const textoModal = document.getElementById("modalTextarea");
 
+
+  function mostrarDescarga(){
+    botonDescargaExcel.classList.add("show")
+  }
+
+  function ocultarDescarga(){
+    botonDescargaExcel.classList.remove("show")
+  }
+
   // Funcion ocultar Modal
   function ocultarModal() {
     // modal.style.display = "none";
-    modal.classList.remove("show")
+    modal.classList.remove("show");
   }
 
   // Funcion mostrar Modal
@@ -378,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   function mostrarModal(nombreModal) {
     // modal.style.display = "flex"; // Mostrar modal
-    modal.classList.add("show")
+    modal.classList.add("show");
     const label = document.querySelector("#input-group-modal > label");
     label.textContent = `Filtrar ${nombreModal}`;
 
@@ -416,8 +452,6 @@ document.addEventListener("DOMContentLoaded", function () {
     textoModal.focus();
   }
 
-
-
   // modalBtn.addEventListener("click", function () {
   //   mostrarModal("Holi");
   // });
@@ -432,13 +466,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const text = document.getElementById("modalTextarea").value;
     console.log("Texto ingresado:", text); // Puedes hacer algo con el texto
     // modal.style.display = "none";
-    ocultarModal()
+    ocultarModal();
   });
 
   // Cerrar modal al hacer clic en Cancelar
   cancelBtn.addEventListener("click", () => {
     // modal.style.display = "none";
-    ocultarModal()
+    ocultarModal();
   });
 
   // Cerrar modal al hacer clic fuera del contenido
@@ -446,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target === modal) {
       // Si se hace clic en el fondo oscuro
       // modal.style.display = "none";
-      ocultarModal()
+      ocultarModal();
     }
   });
 
@@ -531,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
           case "cargaID":
             filtroData.carga = "";
-            
+
             break;
           default:
             break;

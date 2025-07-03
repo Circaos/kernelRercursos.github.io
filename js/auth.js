@@ -38,6 +38,8 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         let hoy = new Date()
         localStorage.setItem("horaSessionCode",hoy.toISOString())
 
+
+        localStorage.setItem("modalShow","true")
         // Redirigir al dashboard
         window.location.href = "dashboard.html";
       } else {

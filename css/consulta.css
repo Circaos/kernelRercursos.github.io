@@ -72,8 +72,8 @@ h1::after {
   flex-wrap: wrap;
   gap: 20px;
   align-items: flex-end;
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
   background: var(--light-color);
   border-radius: 8px;
 }
@@ -131,7 +131,7 @@ h1::after {
 
 /* Estilos para la tabla */
 .results-table {
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
@@ -139,7 +139,7 @@ h1::after {
 }
 
 .table-container {
-  max-height: 650px;
+  max-height: 80vh;
   overflow-y: auto;
   position: relative;
 }
@@ -362,7 +362,23 @@ tbody tr:hover {
   background: #a8a8a8;
 }
 
+.contenedorBotonExcel{
+  text-align: center;
+}
 
+.colorBotonExcel{
+  display:none;
+  background-color: var(--success-color);
+}
+
+.colorBotonExcel:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.colorBotonExcel.show{
+  display:inline;
+}
 
 /* Responsive design */
 @media (max-width: 768px) {

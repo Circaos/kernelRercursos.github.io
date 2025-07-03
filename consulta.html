@@ -9,6 +9,7 @@
   <!-- <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/cabecera.css"> -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +18,9 @@
 
         <!-- Contenedor fijo para el título y formulario -->
     <div class="sticky-header">
+      
       <h1>Consulta por Fechas</h1>
+
       <div class="date-range">
         <div class="input-group">
           <label for="fechaInicio">Fecha Inicio</label>
@@ -33,7 +36,9 @@
       </div> 
     </div>
     
-
+    <div class="contenedorBotonExcel">
+      <button class="action-btn colorBotonExcel" id="botonDescargaExcel">Descargar EXCEL</button>
+    </div>
     <!-- Contenedor de la tabla con scroll -->
     <div class="table-scroll-container">
 
