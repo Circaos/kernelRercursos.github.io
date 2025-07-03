@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Principal</title>
   <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/dashboardModal.css" />
 </head>
 
 <body>
@@ -36,15 +37,17 @@
   </div>
 
   <!-- Modal de bienvenida -->
-  <div id="welcomeModal" class="modal">
+<div id="welcomeModal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>¡Bienvenido/a a nuestro sitio!</h2>
-      <p>Gracias por visitarnos. Esperamos que encuentres lo que buscas.</p>
-      <button id="acceptBtn">Aceptar</button>
+        <span class="close">&times;</span>
+        <div class="logo-container">
+            <img src="recursos/imagenes/LogoAduanas.png" alt="Logo de la empresa" class="company-logo">
+        </div>
+        <h2 class="welcome-title">¡Bienvenido!</h2>
+        <h2 id="nombreBienvenida" class="welcome-name">Nombre</h2>
+        <button id="acceptBtn" class="accept-button">Aceptar</button>
     </div>
-  </div>
-
+</div>
   <script type="module" src="js/dashboard.js"></script>
 
 </body>

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   const modal = document.getElementById('welcomeModal');
+  const nombreBienvenida = document.getElementById('nombreBienvenida');
   
   // Obtener elementos para cerrar el modal
   const closeBtn = document.querySelector('.close');
@@ -13,8 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {
-    // modal.style.display = 'block';
+    nombreBienvenida.textContent = localStorage.getItem("nombre")
     localStorage.removeItem('modalShow')
+    modal.style.display = 'block';
   }
   
   // Cuando el usuario hace clic en (x), cerrar el modal

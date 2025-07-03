@@ -40,6 +40,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
 
         localStorage.setItem("modalShow","true")
+        localStorage.setItem("nombre",data.nombre)
         // Redirigir al dashboard
         window.location.href = "dashboard.html";
       } else {
