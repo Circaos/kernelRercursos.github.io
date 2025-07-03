@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {
-    modal.style.display = 'block';
+    // modal.style.display = 'block';
     localStorage.removeItem('modalShow')
   }
   
