@@ -19,8 +19,9 @@
 body {
   background-color: #f5f7fa;
   color: var(--dark-color);
-  min-height: 100dvh;
+  height: 100dvh;
   padding: 20px;
+  overflow-y: hidden;
 }
 
 .dashboard-container {
