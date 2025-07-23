@@ -21,7 +21,8 @@ body {
   background-color: #f5f7fa;
   color: var(--dark-color);
   /* line-height: 1.6; */
-  padding: 20px;
+  padding: 15px;
+  height: 100dvh;
 }
 
 .consulta-container {
@@ -30,8 +31,11 @@ body {
   background: white;
   border-radius: 10px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px;
+  padding: 15px 30px;
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .back-button {
@@ -48,12 +52,21 @@ body {
   transform: translateX(-3px);
 }
 
+.titulo{
+  position: relative;
+  /* height: 40px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 h1 {
   color: var(--secondary-color);
-  margin-bottom: 30px;
   font-weight: 600;
-  position: relative;
+  /* position: absolute; */
+  margin-bottom: 7px;
   padding-bottom: 10px;
+  
 }
 
 h1::after {
@@ -70,7 +83,7 @@ h1::after {
 .date-range {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   align-items: flex-end;
   margin-bottom: 10px;
   padding: 10px;
@@ -81,6 +94,8 @@ h1::after {
 .input-group {
   flex: 1;
   min-width: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-group label {
@@ -131,20 +146,27 @@ h1::after {
 
 /* Estilos para la tabla */
 .results-table {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
   position: relative;
+  height: 100%;
+  /* background-color: red; */
 }
 
 .table-container {
-  max-height: 80vh;
+  /* max-height: 70vh; */
   overflow-y: auto;
+  overflow-x: auto;
   position: relative;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 table {
+  /* height: 100%; */
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -364,6 +386,7 @@ tbody tr:hover {
 
 .contenedorBotonExcel{
   text-align: center;
+  display: block;
 }
 
 .colorBotonExcel{
@@ -380,6 +403,11 @@ tbody tr:hover {
   display:inline;
 }
 
+.table-scroll-container{
+  flex: 1;
+  /* background-color: green; */
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .date-range {
@@ -388,7 +416,7 @@ tbody tr:hover {
   }
   
   .action-btn {
-    width: 100%;
+    padding: 10px;
   }
   
   .consulta-container {
@@ -412,8 +440,35 @@ tbody tr:hover {
       max-width: 120px;
       padding: 6px 7px;
   }
-
+/* 
   .table-container {
   max-height: 700px;
+  } */
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 0px;
+  }
+
+  .titulo{
+    margin: 10px 5px;
+  }
+
+  .input-group{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-group input{
+    flex: 3;
+    padding: 7px 15px;
+  }
+
+  .input-group label{
+    flex: 2;
+  }
+
+  .cabeceraTabla{
+    font-size: 10px;
   }
 }
