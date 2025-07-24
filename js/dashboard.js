@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obtener elementos para cerrar el modal
   const closeBtn = document.querySelector('.close');
   const acceptBtn = document.getElementById('acceptBtn');
-  
-  // Obtener Body
-  const body = document.querySelector('body')
-  // instalar corrector
+
 
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {

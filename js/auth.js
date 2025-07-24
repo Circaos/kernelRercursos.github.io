@@ -7,6 +7,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const password = document.getElementById("password").value;
   const errorMessage = document.getElementById("errorMessage");
 
+  showLoading()
   // Limpiar mensaje de error
   errorMessage.style.display = "none";
 
@@ -28,6 +29,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       return response.json();
     })
     .then((data) => {
+      hideLoading()
       console.log(`Data recibida es ${data}`);
 
       if (data.status === 200) {
@@ -48,7 +50,23 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       }
     })
     .catch((error) => {
+      hideLoading()
       errorMessage.textContent = error.message;
       errorMessage.style.display = "block";
     });
+
+  
+
+  // Funciones del loading
+    // Mostrar spinner
+  function showLoading() {
+    loadingOverlay.style.display = "flex";
+  }
+
+  // Ocultar spinner
+  function hideLoading() {
+    loadingOverlay.style.display = "none";
+  }
+
+
 });
