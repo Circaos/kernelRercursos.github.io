@@ -19,15 +19,12 @@
 body {
   background-color: #faf8f5;
   color: var(--dark-color);
-  /* height: 100vh; */
+  height: 100vh;
   
   padding: 20px;
   /* overflow-y: hidden; */
 }
 
-.correctorBody{
-  height: 100dvh;
-}
 
 .dashboard-container {
   max-width: 1200px;
@@ -224,6 +221,10 @@ body {
   .menu-title {
     font-size: 1.1rem;
   }
+
+  .body{
+    padding: 35px 10px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -238,9 +239,16 @@ body {
 
 }
 
-  @media (display-mode: standalone) and (not (pointer: coarse)) {
+@media (display-mode: standalone) and (not (pointer: coarse)) {
   body {
     /* height: 100vh; */
     background-color: red;
+  }
+}
+
+@media (display-mode: standalone) {
+  body {
+    /* height: 100vh; */
+    background-color: rgb(27, 34, 255);
   }
 }

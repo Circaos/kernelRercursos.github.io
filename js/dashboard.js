@@ -15,12 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obtener Body
   const body = document.querySelector('body')
   // instalar corrector
-  setTimeout(function() {
-    body.classList.remove("correctorBody")
-  },1000)
-  setTimeout(function() {
-    body.classList.add("correctorBody")
-  },1000)
 
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {
