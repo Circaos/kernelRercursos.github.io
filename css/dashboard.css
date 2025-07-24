@@ -19,10 +19,14 @@
 body {
   background-color: #faf8f5;
   color: var(--dark-color);
-  height: 100vh;
-  /* height: 100dvh; */
+  /* height: 100vh; */
+  
   padding: 20px;
   /* overflow-y: hidden; */
+}
+
+.correctorBody{
+  height: 100dvh;
 }
 
 .dashboard-container {

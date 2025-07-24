@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeBtn = document.querySelector('.close');
   const acceptBtn = document.getElementById('acceptBtn');
   
+  // Obtener Body
+  const body = document.querySelector('body')
+  // instalar corrector
+  body.classList.add("correctorBody")
+
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {
     nombreBienvenida.textContent = localStorage.getItem("nombre")
