@@ -222,9 +222,9 @@ body {
     font-size: 1.1rem;
   }
 
-  body{
+  /* body{
     padding: 35px 10px;
-  }
+  } */
 }
 
 @media (max-width: 480px) {
@@ -238,17 +238,15 @@ body {
   }
 
 }
-
+/* 
 @media (display-mode: standalone) and (not (pointer: coarse)) {
   body {
-    /* height: 100vh; */
     background-color: red;
   }
 }
 
 @media (display-mode: standalone) {
   body {
-    /* height: 100vh; */
     background-color: rgb(27, 34, 255);
   }
-}
+} */
