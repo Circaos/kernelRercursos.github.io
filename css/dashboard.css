@@ -232,10 +232,11 @@ body {
     margin-bottom: 30px;
   }
 
+}
+
   @media (display-mode: standalone) and (not (pointer: coarse)) {
   body {
     /* height: 100vh; */
     background-color: red;
   }
-}
 }
