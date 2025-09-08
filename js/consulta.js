@@ -200,17 +200,88 @@ document.addEventListener("DOMContentLoaded", function () {
 
   botonDescargaExcel.addEventListener("click", function () {
     try {
-      // Convertir tabla a workbook de Excel
-      const workbook = XLSX.utils.table_to_book(cabeceras);
+      // // Convertir tabla a workbook de Excel
+      // const workbook = XLSX.utils.table_to_book(cabeceras);
 
-      // Opciones adicionales (puedes personalizar)
-      const opciones = {
-        bookType: "xlsx", // Puedes usar 'xls' para formato más antiguo
-        compression: true, // Comprimir el archivo resultante
-      };
+      // // Opciones adicionales (puedes personalizar)
+      // const opciones = {
+      //   bookType: "xlsx", // Puedes usar 'xls' para formato más antiguo
+      //   compression: true, // Comprimir el archivo resultante
+      // };
 
-      // Generar y descargar el archivo
-      XLSX.writeFile(workbook, "datos_descargados.xlsx", opciones);
+      // // Generar y descargar el archivo
+      // XLSX.writeFile(workbook, "datos_descargados.xlsx", opciones);
+
+      // Crear un nuevo libro de trabajo
+
+      let allDataFiltrada = allData.filter(item => item.fechaLLegada.length > 1).map(item =>({
+        ...item,
+        idAutogenerado: `AS-${item.id}`
+      }))
+
+      const wb = XLSX.utils.book_new();
+      
+      // Convertir JSON a hoja de trabajo
+      const ws = XLSX.utils.json_to_sheet(allDataFiltrada);
+      
+      // Procesar las fechas para forzar formato de texto
+      const range = XLSX.utils.decode_range(ws['!ref']);
+      
+      // Identificar columnas que contienen fechas por nombre
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+          const header = XLSX.utils.encode_cell({r: 0, c: C});
+          const headerValue = ws[header] ? ws[header].v : '';
+          
+          // Si el encabezado sugiere que es una fecha
+          if (headerValue && headerValue.toLowerCase().includes('fecha')) {
+              // Procesar todas las celdas de esta columna
+              for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                  const cellAddress = XLSX.utils.encode_cell({r: R, c: C});
+                  if (ws[cellAddress]) {
+                      // Forzar el valor como texto
+                      ws[cellAddress].t = 's';
+                      // Opcional: agregar comilla simple para Excel
+                      // ws[cellAddress].v = "'" + ws[cellAddress].v;
+                  }
+              }
+          }
+      }
+      
+      // Ajustar el ancho de las columnas
+      const colWidths = [
+          {wch: 8},   // ID
+          {wch: 15},  // Nombre
+          {wch: 60},  // Fecha Nacimiento
+          {wch: 15},  // Fecha Registro
+          {wch: 15},  // Saldo
+          {wch: 60},  // Saldo
+          {wch: 60},  // Saldo
+          {wch: 15},  // Saldo
+          {wch: 15},  // Saldo
+          {wch: 10},   // Activo
+          {wch: 10},   // Activo
+          {wch: 60}   // Activo
+      ];
+      ws['!cols'] = colWidths;
+      
+      // Agregar la hoja de trabajo al libro
+      XLSX.utils.book_append_sheet(wb, ws, "Datos");
+      
+      // Generar el nombre del archivo con la fecha actual
+      const date = new Date();
+      const fileName = `datos_directos_${date.toISOString().split('T')[0]}.xlsx`;
+      
+      // Descargar el archivo
+      XLSX.writeFile(wb, fileName);
+      
+      // Mostrar mensaje de éxito
+      // const message = document.getElementById('message');
+      // message.style.display = 'block';
+      // setTimeout(() => {
+      //     message.style.display = 'none';
+      // }, 3000);
+
+
     } catch (error) {
       console.error("Error al exportar a Excel:", error);
     }
