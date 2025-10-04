@@ -38,12 +38,74 @@ const geojsonDataDistritos = await fetch("data/distritos03.geojson").then(r => r
 
 
 
+// ---------------------------------
+const noAcogidoDepas = [
+    {
+        "departamentos": ["LIMA", "ANCASH", "LAMBAYEQUE","HUANUCO","PASCO","JUNIN","AYACUCHO",
+            "TUMBES", "ICA", "AREQUIPA", "MOQUEGUA", "TACNA", "PUNO","CUSCO","HUANCAVELICA",
+            "APURIMAC", "PIURA", "CAJAMARCA", "LA LIBERTAD"]
+    }
+]
+const geoNoAcogidoDepas = obtenerFiltradoData(noAcogidoDepas)
+L.geoJSON(geoNoAcogidoDepas, {
+    style: {
+        color: 'cadetblue',
+        weight: 12
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(getPopUp("NO ACOGIDO", feature));
+    }
+}).addTo(map);
+
+// ---------------------------------
+const noAcogidoProvincias = [
+    {
+        "departamento": "HUANUCO",
+        "provincias": ["HUACAYBAMBA", "DOS DE MAYO", "YAROWILCA", "LAURICOCHA","HUANUCO","AMBO","HUAMALIES"]
+    },
+    {
+        "departamento": "AYACUCHO",
+        "provincias": ["HUANTA","LA MAR"]
+    }
+]
+const geoNoAcogidoProvincias = obtenerFiltradoData(noAcogidoProvincias)
+L.geoJSON(geoNoAcogidoProvincias, {
+    style: {
+        color: 'cadetblue',
+        weight: 7
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(getPopUp("NO ACOGIDO", feature));
+    }
+}).addTo(map);
+
+// ---------------------------------
+const noAcogidoDistrito = [
+    {
+        "departamento": "HUANUCO",
+        "provincia": "HUANUCO",
+        "distritos": [
+            "SAN PABLO DE PILLAO"
+        ]
+    }
+]
+const geoNoAcogidoDistrito = obtenerFiltradoData(noAcogidoDistrito)
+L.geoJSON(geoNoAcogidoDistrito, {
+    style: {
+        color: 'cadetblue',
+        weight: 6
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(getPopUp("NO ACOGIDO", feature));
+    }
+}).addTo(map);
+
 
 
 // ---------------------------------
 const filtroL31A = [
     {
-        "departamentos" : ["LORETO", "MADRE DE DIOS", "UCAYALI", "AMAZONAS", "SAN MARTIN"]
+        "departamentos": ["LORETO", "MADRE DE DIOS", "UCAYALI", "AMAZONAS", "SAN MARTIN"]
     }
 ]
 const geoL31A = obtenerFiltradoData(filtroL31A)
@@ -53,7 +115,7 @@ L.geoJSON(geoL31A, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - a)",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - a)", feature));
     }
 }).addTo(map);
 
@@ -61,13 +123,13 @@ L.geoJSON(geoL31A, {
 // ---------------------------------
 const filtroL31B = [
     {
-        "distritos" : ["SIVIA", "AYAHUANCO", "LLOCHEGUA", "CANAYRE"],
-        "provincia" : "HUANTA",
+        "distritos": ["SIVIA", "AYAHUANCO", "LLOCHEGUA", "CANAYRE"],
+        "provincia": "HUANTA",
         "departamento": "AYACUCHO"
     },
     {
-        "distritos" : ["AYNA", "SAN MIGUEL", "SANTA ROSA", "SAMUGARI"],
-        "provincia" : "LA MAR",
+        "distritos": ["AYNA", "SAN MIGUEL", "SANTA ROSA", "SAMUGARI"],
+        "provincia": "LA MAR",
         "departamento": "AYACUCHO"
     }
 ]
@@ -78,14 +140,14 @@ L.geoJSON(geoL31B, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - b) | Art.1 L29525 | Art.1 L30399",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - b) | Art.1 L29525 | Art.1 L30399", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31C = [
     {
-        "provincias" : ["JAEN", "SAN IGNACIO"],
+        "provincias": ["JAEN", "SAN IGNACIO"],
         "departamento": "CAJAMARCA"
     }
 ]
@@ -96,29 +158,29 @@ L.geoJSON(geoL31C, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - c)",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - c)", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31D = [
     {
-        "distritos" : ["YANATILE"],
-        "provincia" : "CALCA",
+        "distritos": ["YANATILE"],
+        "provincia": "CALCA",
         "departamento": "CUSCO"
     },
     {
-        "provincias" : ["LA CONVENCION"],
+        "provincias": ["LA CONVENCION"],
         "departamento": "CUSCO"
     },
     {
-        "distritos" : ["KOSÑIPATA"],
-        "provincia" : "PAUCARTAMBO",
+        "distritos": ["KOSÑIPATA"],
+        "provincia": "PAUCARTAMBO",
         "departamento": "CUSCO"
     },
     {
-        "distritos" : ["CAMANTI","MARCAPATA"],
-        "provincia" : "QUISPICANCHI",
+        "distritos": ["CAMANTI", "MARCAPATA"],
+        "provincia": "QUISPICANCHI",
         "departamento": "CUSCO"
     },
 
@@ -130,15 +192,15 @@ L.geoJSON(geoL31D, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - c)",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - Art.3.1 - c)", feature));
     }
 }).addTo(map);
 // ---------------------------------
 // ---------------------------------
 const filtroL31E27759 = [
     {
-        "departamento" : "HUANUCO",
-        "provincias" : [
+        "departamento": "HUANUCO",
+        "provincias": [
             "LEONCIO PRADO",
             "PUERTO INCA",
             "MARAÑON",
@@ -146,27 +208,27 @@ const filtroL31E27759 = [
         ]
     },
     {
-        "departamento" : "HUANUCO",
-        "provincia" : "HUANUCO",
-        "distritos" : [
-            "CHURUBAMBA","SANTA MARIA DEL VALLE", "CHINCHAO", "HUANUCO","AMARILIS","PILLCO MARCA"
+        "departamento": "HUANUCO",
+        "provincia": "HUANUCO",
+        "distritos": [
+            "CHURUBAMBA", "SANTA MARIA DEL VALLE", "CHINCHAO", "HUANUCO", "AMARILIS", "PILLCO MARCA"
         ]
     },
     {
-        "departamento" : "HUANUCO",
-        "provincia" : "HUAMALIES",
-        "distritos" : [
+        "departamento": "HUANUCO",
+        "provincia": "HUAMALIES",
+        "distritos": [
             "MONZON"
         ]
     },
     {
-        "departamento" : "HUANUCO",
-        "provincia" : "AMBO",
-        "distritos" : [
-            "CONCHAMARCA","TOMAY KICHWA","AMBO"
+        "departamento": "HUANUCO",
+        "provincia": "AMBO",
+        "distritos": [
+            "CONCHAMARCA", "TOMAY KICHWA", "AMBO"
         ]
     }
-    
+
 ]
 
 const geoL31E27759 = obtenerFiltradoData(filtroL31E27759)
@@ -176,15 +238,15 @@ L.geoJSON(geoL31E27759, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - e) | LEY 27759",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - e) | LEY 27759", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31F = [
     {
-        "departamento" : "JUNIN",
-        "provincias" : [
+        "departamento": "JUNIN",
+        "provincias": [
             "CHANCHAMAYO",
             "SATIPO"
         ]
@@ -197,15 +259,15 @@ L.geoJSON(geoL31F, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - f) | LEY27759 Art.5 y Art.6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - f) | LEY27759 Art.5 y Art.6", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31G = [
     {
-        "departamento" : "PASCO",
-        "provincias" : [
+        "departamento": "PASCO",
+        "provincias": [
             "OXAPAMPA"
         ]
     }
@@ -217,23 +279,23 @@ L.geoJSON(geoL31G, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - g) | LEY 27759 Art. 5 y Art. 6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - g) | LEY 27759 Art. 5 y Art. 6", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31H = [
     {
-        "departamento" : "PUNO",
-        "provincia" : "CARABAYA",
-        "distritos" : [
-            "COASA","AYAPATA", "ITUATA", "OLLACHEA","SAN GABAN"
+        "departamento": "PUNO",
+        "provincia": "CARABAYA",
+        "distritos": [
+            "COASA", "AYAPATA", "ITUATA", "OLLACHEA", "SAN GABAN"
         ]
-    },{
-        "departamento" : "PUNO",
-        "provincia" : "SANDIA",
-        "distritos" : [
-            "SAN JUAN DEL ORO","LIMBANI", "YANAHUAYA", "PHARA","ALTO INAMBARI","SANDIA","PATAMBUCO"
+    }, {
+        "departamento": "PUNO",
+        "provincia": "SANDIA",
+        "distritos": [
+            "SAN JUAN DEL ORO", "LIMBANI", "YANAHUAYA", "PHARA", "ALTO INAMBARI", "SANDIA", "PATAMBUCO"
         ]
     }
 ]
@@ -244,17 +306,17 @@ L.geoJSON(geoL31H, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - h) | LEY 27759 Art. 5 y Art. 6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - h) | LEY 27759 Art. 5 y Art. 6", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31I = [
     {
-        "departamento" : "HUANCAVELICA",
-        "provincia" : "TAYACAJA",
-        "distritos" : [
-            "HUACHOCOLPA","TINTAY PUNCU"
+        "departamento": "HUANCAVELICA",
+        "provincia": "TAYACAJA",
+        "distritos": [
+            "HUACHOCOLPA", "TINTAY PUNCU"
         ]
     }
 ]
@@ -265,16 +327,16 @@ L.geoJSON(geoL31I, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - i) | LEY 27759 Art. 5 y Art. 6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - i) | LEY 27759 Art. 5 y Art. 6", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31J = [
     {
-        "departamento" : "LA LIBERTAD",
-        "provincia" : "PATAZ",
-        "distritos" : [
+        "departamento": "LA LIBERTAD",
+        "provincia": "PATAZ",
+        "distritos": [
             "ONGON"
         ]
     }
@@ -286,16 +348,16 @@ L.geoJSON(geoL31J, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - j) | LEY 27759 Art. 5 y Art. 6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - j) | LEY 27759 Art. 5 y Art. 6", feature));
     }
 }).addTo(map);
 
 // ---------------------------------
 const filtroL31K = [
     {
-        "departamento" : "PIURA",
-        "provincia" : "HUANCABAMBA",
-        "distritos" : [
+        "departamento": "PIURA",
+        "provincia": "HUANCABAMBA",
+        "distritos": [
             "EL CARMEN DE LA FRONTERA"
         ]
     }
@@ -307,38 +369,12 @@ L.geoJSON(geoL31K, {
         weight: 3
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - j) | LEY 27759 Art. 5 y Art. 6",feature));
+        layer.bindPopup(getPopUp("LEY 27037 - ART. 3.1 - j) | LEY 27759 Art. 5 y Art. 6", feature));
     }
 }).addTo(map);
 
 
-// ---------------------------------
-const noAcogido = [
-    {
-        "departamento" : "HUANUCO",
-        "provincia" : "HUANUCO",
-        "distritos" : [
-            "SAN PABLO DE PILLAO"
-        ]
-    },
-    {
-        "departamento" : "HUANUCO",
-        "provincias" : ["HUACAYBAMBA","DOS DE MAYO","YAROWILCA","LAURICOCHA"]
-    },
-    {
-        "departamentos" : ["LIMA","ANCASH","LAMBAYEQUE","TUMBES","ICA","AREQUIPA","MOQUEGUA","TACNA","APURIMAC"]
-    }
-]
-const geoNoAcogido = obtenerFiltradoData(noAcogido)
-L.geoJSON(geoNoAcogido, {
-    style: {
-        color: 'cadetblue',
-        weight: 3
-    },
-    onEachFeature: function (feature, layer) {
-        layer.bindPopup(getPopUp("NO ACOGIDO",feature));
-    }
-}).addTo(map);
+
 
 
 
@@ -503,7 +539,7 @@ function getPopUp(ley, feature) {
     const PROV = feature.properties.PROV
     const CODIGO = feature.properties.CODIGO
 
-    if (PROV != null && CODIGO != null ) {
+    if (PROV != null && CODIGO != null) {
 
         const provincia = provinciasCodigoNombre[PROV]
         const departamento = depatamentoCodigoNombre[DPTO]
@@ -515,18 +551,18 @@ function getPopUp(ley, feature) {
             PROVINCIA: ${provincia} <br>
             DEPARTAMENTO: ${departamento} <br>
         `
-    }else if (PROV == null) {
+    } else if (PROV == null) {
         if (CODIGO != null) {
             return `
             <strong>${ley}</strong><br>
             PROVINCIA: ${feature.properties.NOMBRE}<br>
             DEPARTAMENTO: ${feature.properties.DEPARTAMEN} <br>
             `
-        }else{
-           return `
+        } else {
+            return `
             <strong>${ley}</strong><br>
             DEPARTAMENTO: ${feature.properties.NOMBRE}<br>
-            ` 
+            `
         }
     }
 
@@ -551,32 +587,32 @@ function obtenerFiltradoData(objetosFiltro) {
 
     for (const filtro of objetosFiltro) {
         if (filtro.distritos != null) {
-            const distritos = filtro.distritos; 
+            const distritos = filtro.distritos;
             const provincia = provinciasNombreCodigos[filtro.provincia];
             const departamento = depatamentoNombreCodigos[filtro.departamento];
             console.log(`provincia ${provincia} | departamento ${departamento}`)
-            const nuevoArrayFiltro = geojsonDataDistritos.features.filter( feature =>{
-                return ( 
-                    feature.properties.PROV == provincia && 
-                    feature.properties.DPTO == departamento && 
+            const nuevoArrayFiltro = geojsonDataDistritos.features.filter(feature => {
+                return (
+                    feature.properties.PROV == provincia &&
+                    feature.properties.DPTO == departamento &&
                     distritos.includes(feature.properties.NOMBRE)
                 )
             })
             rptFeature = rptFeature.concat(nuevoArrayFiltro)
-        } else if(filtro.provincias != null){
+        } else if (filtro.provincias != null) {
             const provincias = filtro.provincias;
 
-            const nuevoArrayFiltro = geojsonDataProvincias.features.filter( feature =>{
-                return ( 
-                    feature.properties.DEPARTAMEN == filtro.departamento && 
+            const nuevoArrayFiltro = geojsonDataProvincias.features.filter(feature => {
+                return (
+                    feature.properties.DEPARTAMEN == filtro.departamento &&
                     provincias.includes(feature.properties.NOMBRE)
                 )
             })
             rptFeature = rptFeature.concat(nuevoArrayFiltro)
-        }else{
+        } else {
             const departamentos = filtro.departamentos
-            const nuevoArrayFiltro = geojsonDataDepartamentos.features.filter( feature =>{
-                return ( 
+            const nuevoArrayFiltro = geojsonDataDepartamentos.features.filter(feature => {
+                return (
                     departamentos.includes(feature.properties.NOMBRE)
                 )
             })
