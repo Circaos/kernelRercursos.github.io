@@ -7,6 +7,14 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     atribution: '&copy <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map)
 
+L.control.locate({
+    position: 'topleft', // o 'topright'
+    strings: {
+        title: "Mostrar mi ubicación"
+    },
+    flyTo: true,
+}).addTo(map);
+
 
 // const geojsonData = await fetch("../data/azfaltado.geojson").then(r => r.json());
 
@@ -41,8 +49,8 @@ const geojsonDataDistritos = await fetch("data/distritos03.geojson").then(r => r
 // ---------------------------------
 const noAcogidoDepas = [
     {
-        "departamentos": ["LIMA", "ANCASH", "LAMBAYEQUE","HUANUCO","PASCO","JUNIN","AYACUCHO",
-            "TUMBES", "ICA", "AREQUIPA", "MOQUEGUA", "TACNA", "PUNO","CUSCO","HUANCAVELICA",
+        "departamentos": ["LIMA", "ANCASH", "LAMBAYEQUE", "HUANUCO", "PASCO", "JUNIN", "AYACUCHO",
+            "TUMBES", "ICA", "AREQUIPA", "MOQUEGUA", "TACNA", "PUNO", "CUSCO", "HUANCAVELICA",
             "APURIMAC", "PIURA", "CAJAMARCA", "LA LIBERTAD"]
     }
 ]
@@ -61,11 +69,11 @@ L.geoJSON(geoNoAcogidoDepas, {
 const noAcogidoProvincias = [
     {
         "departamento": "HUANUCO",
-        "provincias": ["HUACAYBAMBA", "DOS DE MAYO", "YAROWILCA", "LAURICOCHA","HUANUCO","AMBO","HUAMALIES"]
+        "provincias": ["HUACAYBAMBA", "DOS DE MAYO", "YAROWILCA", "LAURICOCHA", "HUANUCO", "AMBO", "HUAMALIES"]
     },
     {
         "departamento": "AYACUCHO",
-        "provincias": ["HUANTA","LA MAR"]
+        "provincias": ["HUANTA", "LA MAR"]
     }
 ]
 const geoNoAcogidoProvincias = obtenerFiltradoData(noAcogidoProvincias)
