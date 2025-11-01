@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Verificar sesión
   let rptVerificaSession = verificarSession(sessionCode, horaSessionCode);
   if (!rptVerificaSession.status) {
+    localStorage.clear();
     alert(rptVerificaSession.mensaje);
     window.location.href = "index.html";
     return;
@@ -316,6 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Verificar sesión
     let rptVerificaSession2 = verificarSession(sessionCode, horaSessionCode);
     if (!rptVerificaSession2.status) {
+      localStorage.clear();
       alert(rptVerificaSession2.mensaje);
       window.location.href = "index.html";
       return;
@@ -360,6 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // console.log(data);
         if (data.estatus == 400) {
           alert(`Error en Session, ${data.mensaje}`);
+          localStorage.clear();
           window.location.href = "index.html";
 
           ocultarDescarga()

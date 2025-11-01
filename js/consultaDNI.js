@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Verificar sesión
   let rptVerificaSession = verificarSession(sessionCode,horaSessionCode)
   if (!rptVerificaSession.status) {
+    localStorage.clear();
     alert(rptVerificaSession.mensaje)
     window.location.href = "index.html";
     return;
@@ -136,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pintarCardDNI(response.data);
           }
         } else if (response.estatus == 300) {
+          localStorage.clear();
           alert(`Error en Session, ${response.mensaje}`);
           window.location.href = "index.html";
           return;
@@ -187,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         } else if (responseDatosDNI.estatus == 300) {
           alert(`Error en Session, ${responseDatosDNI.mensaje}`);
+          localStorage.clear();
           window.location.href = "index.html";
           return;
         } else {
@@ -209,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         } else if (responseFecha.estatus == 300) {
           alert(`Error en Session, ${responseFecha.mensaje}`);
+          localStorage.clear();
           window.location.href = "index.html";
           return;
         } else {

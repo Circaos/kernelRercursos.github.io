@@ -22,9 +22,11 @@ export function verificarSession(sessionCode, horaSessionCode) {
     return rpt;
   } else {
     let horaGuardadaAsendida = new Date(horaSessionCode);
+    console.log("horaSessionCode",horaGuardadaAsendida)
     horaGuardadaAsendida.setMinutes(horaGuardadaAsendida.getMinutes() + PROJECT_CONFIG.RANGO_SESSION);
     let horaAhora = new Date();
-
+    console.log("horaAhora",horaAhora)
+    console.log("horaGuardadaAsendida",horaGuardadaAsendida)
     if (horaGuardadaAsendida <= horaAhora) {
       // alert("Sesión expirada. Redirigiendo al login...");
       // window.location.href = "index.html";
