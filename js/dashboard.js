@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obtener elementos para cerrar el modal
   const closeBtn = document.querySelector('.close');
   const acceptBtn = document.getElementById('acceptBtn');
+  const cerrarSessionBtn = document.getElementById('optionCerrarSession');
 
   nombreUsuario.textContent = nombreSession
 
@@ -38,6 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
+  }
+
+  //Cuando se hace click en cerrar
+  cerrarSessionBtn.onclick = function(){
+    localStorage.clear();
+    window.location.href = "index.html";
   }
 
 
