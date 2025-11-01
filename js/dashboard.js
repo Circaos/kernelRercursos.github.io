@@ -1,21 +1,24 @@
-
+import { verificarSession } from "../functions/funcionesGenerales.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   
   const sessionCode = localStorage.getItem("sessionCode");
   const horaSessionCode = localStorage.getItem("horaSessionCode");
+  const nombreSession = localStorage.getItem("nombre");
 
   const modal = document.getElementById('welcomeModal');
   const nombreBienvenida = document.getElementById('nombreBienvenida');
-  
+  const nombreUsuario = document.getElementById('cabecera')
+
   // Obtener elementos para cerrar el modal
   const closeBtn = document.querySelector('.close');
   const acceptBtn = document.getElementById('acceptBtn');
 
+  nombreUsuario.textContent = nombreSession
 
   // Mostrar el modal cuando la página se carga
   if (localStorage.getItem("modalShow") == "true") {
-    nombreBienvenida.textContent = localStorage.getItem("nombre")
+    nombreBienvenida.textContent = nombreSession
     localStorage.removeItem('modalShow')
     modal.style.display = 'block';
   }
@@ -39,8 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   // Verificar sesión
-  if (!sessionCode || !horaSessionCode) {
-    alert("Sesión no válida. Redirigiendo al login...");
+  let rptVerificaSession = verificarSession(sessionCode, horaSessionCode);
+  if (!rptVerificaSession.status) {
+    alert(rptVerificaSession.mensaje);
+    localStorage.clear();
     window.location.href = "index.html";
     return;
   }
