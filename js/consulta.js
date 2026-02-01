@@ -3,6 +3,8 @@ import { verificarSession } from "../functions/funcionesGenerales.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const consultarBtn = document.getElementById("consultarBtn");
+  const consultarBtnOffline = document.getElementById("consultarBtnOffline");
+
   // const obtenerInfoBtn = document.getElementById("obtenerInfoBtn");
   const modalBtn = document.getElementById("modalBtn");
   const tablaResultados = document.getElementById("resultadosTable").getElementsByTagName("tbody")[0];
@@ -11,6 +13,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const sessionCode = localStorage.getItem("sessionCode");
   const horaSessionCode = localStorage.getItem("horaSessionCode");
+
+  const fechaInicioElement = document.getElementById("fechaInicio");
+  const fechaFinElement = document.getElementById("fechaFin");
+
+  const errorMsj = document.getElementById("errorMsj");
+
+  const pestanaDirecta = document.getElementById("pestanaDirecta");
+  const pestanaOffline = document.getElementById("pestanaOffline");
+  const fechaOfflineElement = document.getElementById("fechaOffline");
+
+  // const grupoFechaInicio = document.getElementById("grupoFechaInicio");
+  // const grupoFechaFin = document.getElementById("grupoFechaFin");
+  // const grupoFechaOffline = document.getElementById("grupoFechaOffline");
+
+  const ultimosDatosObtenidos = document.getElementById("ultimosDatosObtenidos");
+
+  const grupoFechaDirecta = document.getElementById("grupoFechaDirecta");
+  const grupoFechaOffline = document.getElementById("grupoFechaOffline");
 
   // Verificar sesión
   let rptVerificaSession = verificarSession(sessionCode, horaSessionCode);
@@ -215,66 +235,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Crear un nuevo libro de trabajo
 
-      let allDataFiltrada = allData.filter(item => item.fechaLLegada.length > 1).map(item =>({
+      let allDataFiltrada = allData.filter(item => item.fechaLLegada.length > 1).map(item => ({
         ...item,
         idAutogenerado: `AS-${item.id}`
       }))
 
       const wb = XLSX.utils.book_new();
-      
+
       // Convertir JSON a hoja de trabajo
       const ws = XLSX.utils.json_to_sheet(allDataFiltrada);
-      
+
       // Procesar las fechas para forzar formato de texto
       const range = XLSX.utils.decode_range(ws['!ref']);
-      
+
       // Identificar columnas que contienen fechas por nombre
       for (let C = range.s.c; C <= range.e.c; ++C) {
-          const header = XLSX.utils.encode_cell({r: 0, c: C});
-          const headerValue = ws[header] ? ws[header].v : '';
-          
-          // Si el encabezado sugiere que es una fecha
-          if (headerValue && headerValue.toLowerCase().includes('fecha')) {
-              // Procesar todas las celdas de esta columna
-              for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-                  const cellAddress = XLSX.utils.encode_cell({r: R, c: C});
-                  if (ws[cellAddress]) {
-                      // Forzar el valor como texto
-                      ws[cellAddress].t = 's';
-                      // Opcional: agregar comilla simple para Excel
-                      // ws[cellAddress].v = "'" + ws[cellAddress].v;
-                  }
-              }
+        const header = XLSX.utils.encode_cell({ r: 0, c: C });
+        const headerValue = ws[header] ? ws[header].v : '';
+
+        // Si el encabezado sugiere que es una fecha
+        if (headerValue && headerValue.toLowerCase().includes('fecha')) {
+          // Procesar todas las celdas de esta columna
+          for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+            const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+            if (ws[cellAddress]) {
+              // Forzar el valor como texto
+              ws[cellAddress].t = 's';
+              // Opcional: agregar comilla simple para Excel
+              // ws[cellAddress].v = "'" + ws[cellAddress].v;
+            }
           }
+        }
       }
-      
+
       // Ajustar el ancho de las columnas
       const colWidths = [
-          {wch: 8},   // ID
-          {wch: 15},  // Nombre
-          {wch: 60},  // Fecha Nacimiento
-          {wch: 15},  // Fecha Registro
-          {wch: 15},  // Saldo
-          {wch: 60},  // Saldo
-          {wch: 60},  // Saldo
-          {wch: 15},  // Saldo
-          {wch: 15},  // Saldo
-          {wch: 10},   // Activo
-          {wch: 10},   // Activo
-          {wch: 60}   // Activo
+        { wch: 8 },   // ID
+        { wch: 15 },  // Nombre
+        { wch: 60 },  // Fecha Nacimiento
+        { wch: 15 },  // Fecha Registro
+        { wch: 15 },  // Saldo
+        { wch: 60 },  // Saldo
+        { wch: 60 },  // Saldo
+        { wch: 15 },  // Saldo
+        { wch: 15 },  // Saldo
+        { wch: 10 },   // Activo
+        { wch: 10 },   // Activo
+        { wch: 60 }   // Activo
       ];
       ws['!cols'] = colWidths;
-      
+
       // Agregar la hoja de trabajo al libro
       XLSX.utils.book_append_sheet(wb, ws, "Datos");
-      
+
       // Generar el nombre del archivo con la fecha actual
       const date = new Date();
       const fileName = `datos_directos_${date.toISOString().split('T')[0]}.xlsx`;
-      
+
       // Descargar el archivo
       XLSX.writeFile(wb, fileName);
-      
+
       // Mostrar mensaje de éxito
       // const message = document.getElementById('message');
       // message.style.display = 'block';
@@ -292,8 +312,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ocultarDescarga()
 
-    const fechaInicio = document.getElementById("fechaInicio").value;
-    const fechaFin = document.getElementById("fechaFin").value;
+    const fechaInicio = fechaInicioElement.value;
+    const fechaFin = fechaFinElement.value;
+
     const sessionCode = localStorage.getItem("sessionCode");
 
     if (!fechaInicio || !fechaFin) {
@@ -349,6 +370,8 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((response) => {
         if (!response.ok) {
+          console.log("errrocito :c");
+          errorMsj.classList.remove("oculto");
           throw new Error("Error en la consulta");
         }
         return response.json();
@@ -379,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
           emptyCell.style.textAlign = "center";
           ocultarDescarga()
           return;
-        }else{
+        } else {
           mostrarDescarga()
         }
 
@@ -396,6 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pintadoTabla(data.dataEncontrada);
       })
       .catch((error) => {
+        errorMsj.classList.remove("oculto");
         hideLoading();
         ocultarDescarga()
         // disableInfoButton();
@@ -468,11 +492,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const textoModal = document.getElementById("modalTextarea");
 
 
-  function mostrarDescarga(){
+  function mostrarDescarga() {
     botonDescargaExcel.classList.add("show")
   }
 
-  function ocultarDescarga(){
+  function ocultarDescarga() {
     botonDescargaExcel.classList.remove("show")
   }
 
@@ -524,6 +548,19 @@ document.addEventListener("DOMContentLoaded", function () {
     textoModal.value = textoContenedor;
 
     textoModal.focus();
+  }
+
+  function establecerFechasIniciales() {
+    let hoyDia = new Date()
+
+    hoyDia.setHours(hoyDia.getHours() - 5)
+
+    fechaOfflineElement.valueAsDate = hoyDia
+    fechaInicioElement.valueAsDate = hoyDia
+
+    hoyDia.setDate(hoyDia.getDate() + 1)
+
+    fechaFinElement.valueAsDate = hoyDia
   }
 
   // modalBtn.addEventListener("click", function () {
@@ -668,4 +705,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // console.log(e.target.matches('#nombreEmpresaID'))
   });
+
+
+  function goToConsultaDirecta() {
+    pestanaOffline.classList.add("inactive-pestana");
+    pestanaDirecta.classList.remove("inactive-pestana");
+
+    grupoFechaDirecta.classList.remove("oculto");
+    grupoFechaOffline.classList.add("oculto");
+  }
+
+  function goToConsultaOffline() {
+    pestanaOffline.classList.remove("inactive-pestana");
+    pestanaDirecta.classList.add("inactive-pestana");
+
+    grupoFechaDirecta.classList.add("oculto");
+    grupoFechaOffline.classList.remove("oculto");
+  }
+
+
+  // function goToConsultaDirecta() {
+  //   pestanaOffline.classList.add("inactive-pestana");
+  //   pestanaDirecta.classList.remove("inactive-pestana");
+
+  //   consultarBtnOffline.classList.add("oculto");
+  //   consultarBtn.classList.remove("oculto");
+
+  //   grupoFechaOffline.classList.add("oculto");
+  //   grupoFechaInicio.classList.remove("oculto");
+  //   grupoFechaFin.classList.remove("oculto");
+
+  //   ultimosDatosObtenidos.classList.add("oculto");
+
+  // }
+
+  // function goToConsultaOffline() {
+  //   pestanaOffline.classList.remove("inactive-pestana");
+  //   pestanaDirecta.classList.add("inactive-pestana");
+
+  //   consultarBtnOffline.classList.remove("oculto");
+  //   consultarBtn.classList.add("oculto");
+
+  //   grupoFechaOffline.classList.remove("oculto");
+  //   grupoFechaInicio.classList.add("oculto");
+  //   grupoFechaFin.classList.add("oculto");
+
+  //   ultimosDatosObtenidos.classList.remove("oculto");
+  // }
+
+
+  pestanaDirecta.addEventListener("click", () => {
+    goToConsultaDirecta()
+  });
+  pestanaOffline.addEventListener("click", () => {
+    goToConsultaOffline()
+  });
+
+
+
+
+  establecerFechasIniciales()
+  goToConsultaDirecta()
+
 });

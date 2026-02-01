@@ -1,13 +1,13 @@
-import {API_CONFIG} from "../config/config.js"
+import { API_CONFIG } from "../config/config.js"
 
 /**
  * @param {string} codigo 
  * @param {string} sessionCode 
  */
-export async function leerMensajeTransimision(codigo,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_LEER}`,{
+export async function leerMensajeTransimision(codigo, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_LEER}`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -25,10 +25,10 @@ export async function leerMensajeTransimision(codigo,sessionCode) {
  * @param {string} mensaje 
  * @param {string} sessionCode 
  */
-export async function enviarMensajeTransimision(codigo,mensaje,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_ADD}`,{
+export async function enviarMensajeTransimision(codigo, mensaje, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_TRANSMISION_ADD}`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -46,10 +46,10 @@ export async function enviarMensajeTransimision(codigo,mensaje,sessionCode) {
   *@param {string} dni  
   *@param {string} sessionCode  
 */
-export async function consultaDNI(dni,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDNI`,{
+export async function consultaDNI(dni, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDNI`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -66,10 +66,10 @@ export async function consultaDNI(dni,sessionCode) {
   *@param {string} ruc  
   *@param {string} sessionCode  
 */
-export async function consultaRUC(ruc,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postRUC`,{
+export async function consultaRUC(ruc, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postRUC`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -88,10 +88,28 @@ export async function consultaRUC(ruc,sessionCode) {
   *@param {string} apellidoMaterno    
   *@param {string} sessionCode    
 */
-export async function consultaDniPorDatos(nombres, apellidoPaterno, apellidoMaterno,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDatosDNI`,{
+export async function consultaDniPorDatos(nombres, apellidoPaterno, apellidoMaterno, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/postDatosDNI`, {
     method: "POST",
-    headers:{
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nombres: nombres,
+      apellidoPaterno: apellidoPaterno,
+      apellidoMaterno: apellidoMaterno,
+      sessionCode: sessionCode,
+    }),
+  })
+  const data = await response.json()
+  // console.log(data)
+  return data
+}
+
+export async function consultaDniPorDatos2(nombres, apellidoPaterno, apellidoMaterno, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.POST_DNI_2}`, {
+    method: "POST",
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -107,10 +125,10 @@ export async function consultaDniPorDatos(nombres, apellidoPaterno, apellidoMate
 }
 
 /**@param {string} dni  *@param {string} sessionCode */
-export async function consultaFechaNacimientoPorDni(dni,sessionCode) {
-  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/fechaNacimiento`,{
+export async function consultaFechaNacimientoPorDni(dni, sessionCode) {
+  const response = await fetch(`${API_CONFIG.BASE_URL}/dni/fechaNacimiento`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({

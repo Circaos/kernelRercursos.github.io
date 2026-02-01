@@ -5,18 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="theme-color" content="#003366">
+  <meta name="theme-color" content="#003366">
 
-        <!-- Favicon estándar -->
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <!-- Favicon en SVG (opcional) -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <!-- Para Apple (iOS) -->
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Para Android/Chrome -->
-    <link rel="manifest" href="site.webmanifest">
-    <!-- Color de tema en navegadores móviles -->
-    <meta name="theme-color" content="#ffffff">
+  <!-- Favicon estándar -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <!-- Favicon en SVG (opcional) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Para Apple (iOS) -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Para Android/Chrome -->
+  <link rel="manifest" href="site.webmanifest">
+  <!-- Color de tema en navegadores móviles -->
+  <meta name="theme-color" content="#ffffff">
 
   <title>Consulta por Fechas</title>
   <link rel="stylesheet" href="css/consulta.css" />
@@ -27,34 +27,57 @@
 </head>
 
 <body>
-  <div class="consulta-container">
+  <div class="cabecera">
     <a href="dashboard.html" class="back-button">← Volver</a>
+    <button class="pestana" id="pestanaDirecta">CONSULTA DIRECTA</button>
+    <button class="pestana" id="pestanaOffline">CONSULTA OFFLINE</button>
+  </div>
+  <div class="consulta-container">
 
-        <!-- Contenedor fijo para el título y formulario -->
+    <!-- Contenedor fijo para el título y formulario -->
     <div class="sticky-header">
-      
+
       <div class="titulo">
-        <h1>Consulta por Fechas</h1>
+        <h1>Consulta</h1>
         <div class="contenedorBotonExcel">
           <button class="action-btn colorBotonExcel" id="botonDescargaExcel">↓ EXCEL</button>
         </div>
       </div>
 
-      <div class="date-range">
-        <div class="input-group">
+      <div class="date-range" id="grupoFechaDirecta">
+        <div class="input-group" id="grupoFechaInicio">
           <label for="fechaInicio">Fecha Inicio</label>
           <input type="date" id="fechaInicio" required />
         </div>
-        <div class="input-group">
+        <div class="input-group" id="grupoFechaFin">
           <label for="fechaFin">Fecha Fin</label>
           <input type="date" id="fechaFin" required />
         </div>
         <button id="consultarBtn" class="action-btn">Consultar</button>
-        <!-- <button id="obtenerInfoBtn" class="action-btn" disabled>Obtener Información</button> -->
-        <!-- <button id="modalBtn" class="action-btn">Prueba Modal</button> -->
-      </div> 
+      </div>
+
+
+      <div class="date-range" id="grupoFechaOffline">
+        <div class="input-group" id="grupoFechaOffline">
+          <label for="fechaOffline">Fecha Offline</label>
+          <input type="date" id="fechaOffline" required />
+        </div>
+        <h2 id="ultimosDatosObtenidos" class="oculto">Ultimos datos obtenidos: 18/01/2026</h2>
+        <button id="consultarBtnOffline" class="action-btn">Consultar Offline</button>
+      </div>
+
+
+      <div class="error-message oculto" id="errorMsj">
+        <h4>- Error en el servidor proviasnac.gob.pe no se encuentra disponible. Por favor, inténtelo de nuevo más
+          tarde. 😬
+        </h4>
+        <h4>- Puede hacer la consulta offline.</h4>
+        <!-- <h4>- Ultima actualización real: 18/01/2026</h4> -->
+        <h4>- Si el problema persiste, contacte al administrador.</h4>
+      </div>
+
     </div>
-    
+
 
     <!-- Contenedor de la tabla con scroll -->
     <div class="table-scroll-container">
@@ -144,7 +167,7 @@
     </div>
   </div>
 
-  <script  type="module" src="js/consulta.js"></script>
+  <script type="module" src="js/consulta.js"></script>
 </body>
 
 </html>

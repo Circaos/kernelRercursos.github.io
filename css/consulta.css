@@ -23,7 +23,11 @@ body {
   /* line-height: 1.6; */
   padding: 15px;
   height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .consulta-container {
   max-width: 1400px;
@@ -34,8 +38,15 @@ body {
   padding: 15px 30px;
   position: relative;
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.cabecera {
+  display: flex;
+  /* justify-content: space-between;
+  align-items: center; */
 }
 
 .back-button {
@@ -45,6 +56,8 @@ body {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s;
+  padding: 0px 15px 8px 15px;
+  flex: 1;
 }
 
 .back-button:hover {
@@ -52,7 +65,26 @@ body {
   transform: translateX(-3px);
 }
 
-.titulo{
+.pestana {
+  cursor: pointer;
+  padding: 12px;
+  margin-right: 15px;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 0px;
+  border-color: white;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* color: white; */
+}
+
+.inactive-pestana {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+.titulo {
   position: relative;
   /* height: 40px; */
   display: flex;
@@ -66,7 +98,8 @@ h1 {
   /* position: absolute; */
   margin-bottom: 7px;
   padding-bottom: 10px;
-  
+  font-size: 20px;
+
 }
 
 h1::after {
@@ -80,6 +113,10 @@ h1::after {
   border-radius: 3px;
 }
 
+#ultimosDatosObtenidos {
+  color: var(--success-color);
+}
+
 .date-range {
   display: flex;
   flex-wrap: wrap;
@@ -89,11 +126,13 @@ h1::after {
   padding: 10px;
   background: var(--light-color);
   border-radius: 8px;
+  justify-content: space-between;
 }
 
 .input-group {
   flex: 1;
   min-width: 200px;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
 }
@@ -315,13 +354,18 @@ tbody tr:hover {
 }
 
 .error-message {
-  margin-top: 20px;
+  margin: 5px 0px 5px 0px;
   padding: 10px;
   background-color: #ffebee;
   color: var(--error-color);
   border-radius: 5px;
+  /* display: none; */
+}
+
+.oculto {
   display: none;
 }
+
 
 /* Estilos para el loading overlay */
 .loading-overlay {
@@ -384,13 +428,13 @@ tbody tr:hover {
   background: #a8a8a8;
 }
 
-.contenedorBotonExcel{
+.contenedorBotonExcel {
   text-align: center;
   display: block;
 }
 
-.colorBotonExcel{
-  display:none;
+.colorBotonExcel {
+  display: none;
   background-color: var(--success-color);
 }
 
@@ -399,11 +443,11 @@ tbody tr:hover {
   transform: translateY(-2px);
 }
 
-.colorBotonExcel.show{
-  display:inline;
+.colorBotonExcel.show {
+  display: inline;
 }
 
-.table-scroll-container{
+.table-scroll-container {
   flex: 1;
   /* background-color: green; */
 }
@@ -414,33 +458,35 @@ tbody tr:hover {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .action-btn {
     padding: 10px;
   }
-  
+
   .consulta-container {
     padding: 10px;
   }
-  
+
   table {
     display: block;
     /* overflow-x: auto; */
     /* white-space: nowrap; */
   }
-  
+
   body {
     padding: 10px;
   }
+
   /* th, td {
     min-width: 120px;
   }*/
-  
+
   td {
-      max-width: 120px;
-      padding: 6px 7px;
+    max-width: 120px;
+    padding: 6px 7px;
   }
-/* 
+
+  /* 
   .table-container {
   max-height: 700px;
   } */
@@ -450,25 +496,35 @@ tbody tr:hover {
     margin-bottom: 0px;
   }
 
-  .titulo{
+  .titulo {
     margin: 10px 5px;
   }
 
-  .input-group{
+  .input-group {
     flex-direction: row;
     align-items: center;
   }
 
-  .input-group input{
+  .input-group input {
     flex: 3;
     padding: 7px 15px;
   }
 
-  .input-group label{
+  .input-group label {
     flex: 2;
   }
 
-  .cabeceraTabla{
+  .cabeceraTabla {
     font-size: 10px;
+  }
+
+  .pestana {
+    padding: 8px;
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  #ultimosDatosObtenidos {
+    font-size: 15px;
   }
 }

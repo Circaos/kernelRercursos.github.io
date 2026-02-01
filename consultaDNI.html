@@ -19,6 +19,7 @@
         <button class="informes-tab-button" data-tab="tab2">Datos por RUC</button>
         <button class="informes-tab-button" data-tab="tab3" style="display: none;">DNI por Datos</button>
         <button class="informes-tab-button" data-tab="tab4" style="display: none;">Fecha Nacimiento por DNI</button>
+        <button class="informes-tab-button" data-tab="tab5">DNI por Datos 2</button>
       </div>
 
       <!-- Pestaña 1 -->
@@ -183,7 +184,6 @@
         </div>
 
         <!-- <div class="informes-results-section">
-
     </div> -->
         <div class="informes-data-card ocultarClass" id="card-alerta-fecha">
           <div class="informes-card-header informes-card-alert">
@@ -212,6 +212,61 @@
             <div class="informes-card-footer">
               <span class="informes-timestamp"> -- Developed by CRJ<span id="card-consulta">--</span></span>
             </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Pestaña 5 -->
+      <div id="tab5" class="informes-tab-content">
+        <div class="informes-input-section">
+          <div class="informes-input-group">
+            <label for="tab5-campo1">Nombres:</label>
+            <input type="text" id="tab5-campo1" placeholder="Ingresar Nombres...">
+          </div>
+          <div class="informes-input-group">
+            <label for="tab5-campo2">Apellido Paterno:</label>
+            <input type="text" id="tab5-campo2" placeholder="Ingresar Apellido Paterno:...">
+          </div>
+          <div class="informes-input-group">
+            <label for="tab5-campo3">Apellido Materno:</label>
+            <input type="text" id="tab5-campo3" placeholder="Ingresar Apellido Materno:...">
+          </div>
+          <!-- <div class="informes-input-group">
+            <label for="tab3-campo1">Rango Inicio:</label>
+            <input type="number" id="tab3-campo1" placeholder="Desde">
+          </div>
+          <div class="informes-input-group">
+            <label for="tab3-campo2">Rango Fin:</label>
+            <input type="number" id="tab3-campo2" placeholder="Hasta">
+          </div> -->
+          <button class="informes-consultar-btn" data-tab="tab5">Consultar</button>
+        </div>
+        <div class="informes-data-card ocultarClass" id="card-alerta-dni-datos2">
+          <div class="informes-card-header informes-card-alert">
+            <h3>Respuesta:</h3>
+            <div class="informes-card-actions">
+              <button class="informes-card-btn delete-alert-btn-dni-datos-2" title="Imprimir">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="informes-results-section">
+          <table id="tabla-resultados5" class="informes-results-table">
+            <thead>
+              <tr>
+                <th>DocumentoDNI</th>
+                <th>NOmbres</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Resultados se llenarán aquí -->
+            </tbody>
+          </table>
+          <div class="informes-card-footer">
+            <span class="informes-timestamp"> -- Developed by CRJ<span id="card-consulta">--</span></span>
           </div>
         </div>
       </div>

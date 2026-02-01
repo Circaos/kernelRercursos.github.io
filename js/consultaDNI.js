@@ -1,6 +1,7 @@
-import { consultaDNI, consultaRUC,consultaDniPorDatos,consultaFechaNacimientoPorDni } from "../functions/consultashttp.js";
-import {PROJECT_CONFIG} from "../config/config.js"
-import {verificarSession} from "../functions/funcionesGenerales.js"
+import { consultaDNI, consultaRUC, consultaDniPorDatos, consultaFechaNacimientoPorDni, consultaDniPorDatos2 } from "../functions/consultashttp.js";
+
+import { PROJECT_CONFIG } from "../config/config.js"
+import { verificarSession } from "../functions/funcionesGenerales.js"
 
 document.addEventListener("DOMContentLoaded", function () {
   // Variables globales
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const horaSessionCode = localStorage.getItem("horaSessionCode");
 
   // Verificar sesión
-  let rptVerificaSession = verificarSession(sessionCode,horaSessionCode)
+  let rptVerificaSession = verificarSession(sessionCode, horaSessionCode)
   if (!rptVerificaSession.status) {
     localStorage.clear();
     alert(rptVerificaSession.mensaje)
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   }
   // }
 
-  
+
 
 
   // Mostrar/Ocultar spinner
@@ -56,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function ocultarAlertaDniDatos() {
     const alerta = document.getElementById("card-alerta-dni-datos");
+    alerta.classList.add("ocultarClass");
+  }
+
+  function ocultarAlertaDniDatos2() {
+    const alerta = document.getElementById("card-alerta-dni-datos2");
     alerta.classList.add("ocultarClass");
   }
 
@@ -84,6 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function mostrarAlertaDniDatos(msg) {
     const alerta = document.getElementById("card-alerta-dni-datos");
+    alerta.querySelector("h3").textContent = `Error: ${msg}`;
+    alerta.classList.remove("ocultarClass");
+  }
+
+  function mostrarAlertaDniDatos2(msg) {
+    const alerta = document.getElementById("card-alerta-dni-datos2");
     alerta.querySelector("h3").textContent = `Error: ${msg}`;
     alerta.classList.remove("ocultarClass");
   }
@@ -174,17 +186,17 @@ document.addEventListener("DOMContentLoaded", function () {
         let nombres = document.getElementById("tab3-campo1").value;
         let apellidoPaterno = document.getElementById("tab3-campo2").value;
         let apellidoMaterno = document.getElementById("tab3-campo3").value;
-        const responseDatosDNI = await consultaDniPorDatos(nombres,apellidoPaterno,apellidoMaterno, sessionCode);
+        const responseDatosDNI = await consultaDniPorDatos(nombres, apellidoPaterno, apellidoMaterno, sessionCode);
         console.log(responseDatosDNI);
 
         if (responseDatosDNI.estatus == 200) {
           if (responseDatosDNI.data.message) {
             mostrarAlertaDniDatos(responseDatosDNI.data.message);
-          } else if(responseDatosDNI.data.error){
+          } else if (responseDatosDNI.data.error) {
             mostrarAlertaDniDatos(responseDatosDNI.data.error);
-          }else if(responseDatosDNI.data.resultados){
+          } else if (responseDatosDNI.data.resultados) {
             rellenarTablaDniDatos(responseDatosDNI.data.resultados);
-          }else {
+          } else {
             mostrarAlertaDniDatos("****Error*****");
           }
         } else if (responseDatosDNI.estatus == 300) {
@@ -219,8 +231,60 @@ document.addEventListener("DOMContentLoaded", function () {
           mostrarAlertaFecha(responseFecha.mensaje);
         }
         break;
+
+      case "tab5":
+
+        // console.log("tab5");
+        LimpiarTablaDatosDNI2();
+        ocultarAlertaDniDatos2();
+
+        let nombres2 = document.getElementById("tab5-campo1").value;
+        let apellidoPaterno2 = document.getElementById("tab5-campo2").value;
+        let apellidoMaterno2 = document.getElementById("tab5-campo3").value;
+
+        if (nombres2 == "" || apellidoPaterno2 == "" || apellidoMaterno2 == "") {
+          alert("Debe ingresar todos los campos");
+          hideLoading();
+          return;
+        }
+
+        const responseDatosDNI2 = await consultaDniPorDatos2(nombres2, apellidoPaterno2, apellidoMaterno2, sessionCode);
+        // console.log(responseDatosDNI2);
+
+        if (responseDatosDNI2.estatus == 200) {
+          let dataRPT = responseDatosDNI2.data;
+
+          if (dataRPT.success == true && dataRPT.data.length > 0) {
+            rellenarTablaDniDatos2(dataRPT.data);
+          } else if (dataRPT.data.length == 0) {
+            mostrarAlertaDniDatos2("No se encontraron datos");
+          } else {
+            mostrarAlertaDniDatos2("Ocurrio un error al obtener los datos | Contactar con el administrador");
+          }
+
+          // if (responseDatosDNI2.data.message) {
+          //   mostrarAlertaDniDatos2(responseDatosDNI2.data.message);
+          // } else if (responseDatosDNI2.data.error) {
+          //   mostrarAlertaDniDatos2(responseDatosDNI2.data.error);
+          // } else if (responseDatosDNI2.data.resultados) {
+          //   rellenarTablaDniDatos(responseDatosDNI2.data.resultados);
+          // } else {
+          //   mostrarAlertaDniDatos2("****Error*****");
+          // }
+          // console.log(responseDatosDNI2.data);
+        } else if (responseDatosDNI2.estatus == 300) {
+          alert(`Error en Session, ${responseDatosDNI2.mensaje}`);
+          localStorage.clear();
+          window.location.href = "index.html";
+          return;
+        } else {
+          mostrarAlertaDniDatos2(responseDatosDNI2.mensaje);
+        }
+
+        break;
     }
     hideLoading();
+
   }
 
   // Limpiar Card DNI
@@ -235,15 +299,21 @@ document.addEventListener("DOMContentLoaded", function () {
     carBody.innerHTML = "";
   }
 
-    // Limpiar Card fecha
-    function LimpiarCardFecha() {
-      const carBody = document.getElementById("card-body-fecha");
-      carBody.innerHTML = "";
-    }
+  // Limpiar Card fecha
+  function LimpiarCardFecha() {
+    const carBody = document.getElementById("card-body-fecha");
+    carBody.innerHTML = "";
+  }
 
   // Limpiar tabla DNI Datos
   function LimpiarTablaDatosDNI() {
     const tablaBody = document.querySelector(`#tabla-resultados3 tbody`);
+    tablaBody.innerHTML = "";
+  }
+
+  // Limpiar tabla DNI Datos
+  function LimpiarTablaDatosDNI2() {
+    const tablaBody = document.querySelector(`#tabla-resultados5 tbody`);
     tablaBody.innerHTML = "";
   }
 
@@ -327,15 +397,28 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
+
+  function rellenarTablaDniDatos2(data) {
+
+    const tablaBody = document.querySelector(`#tabla-resultados5 tbody`);
+    tablaBody.innerHTML = "";
+    data.forEach((item) => {
+      const row = tablaBody.insertRow();
+      row.insertCell(0).textContent = item.dni || "N/A";
+      row.insertCell(1).textContent = item.nombres || "N/A";
+      row.insertCell(2).textContent = item.ap_pat || "N/A";
+      row.insertCell(3).textContent = item.ap_mat || "N/A";
+    });
+  }
   // Rellenar Tabla
   /**@param {{numero:string, nombres:string, apellido_paterno:string,apellido_materno:string}[]} data */
   function rellenarTablaDniDatos(data) {
     if (!Array.isArray(data)) {
       if (data.mensaje) {
         return mostrarAlertaDniDatos(data.mensaje);
-      }else if(data.error){
+      } else if (data.error) {
         return mostrarAlertaDniDatos(data.error);
-      }else{
+      } else {
         return mostrarAlertaDniDatos("ERROR");
       }
     }
