@@ -5,18 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="theme-color" content="#003366">
+  <meta name="theme-color" content="#003366">
 
-        <!-- Favicon estándar -->
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <!-- Favicon en SVG (opcional) -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <!-- Para Apple (iOS) -->
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Para Android/Chrome -->
-    <link rel="manifest" href="site.webmanifest">
-    <!-- Color de tema en navegadores móviles -->
-    <meta name="theme-color" content="#ffffff">
+  <!-- Favicon estándar -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <!-- Favicon en SVG (opcional) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Para Apple (iOS) -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Para Android/Chrome -->
+  <link rel="manifest" href="site.webmanifest">
+  <!-- Color de tema en navegadores móviles -->
+  <meta name="theme-color" content="#ffffff">
 
   <title>Panel Principal</title>
   <link rel="stylesheet" href="css/dashboard.css" />
@@ -24,21 +24,21 @@
 </head>
 
 <body>
-    <header class="topbar">
-      <h1 class="cabecera" id="cabecera">UserName</h1>
-      <!-- <div class="logo">Mi Dashboard</div> -->
-      <div class="user-menu">
-        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Usuario" class="user-icon" />
-        <div class="dropdown">
-          <button class="dropdown-btn">▼</button>
-          <div class="dropdown-content">
-            <!-- <a href="#">Perfil</a>
+  <header class="topbar">
+    <h1 class="cabecera" id="cabecera">UserName</h1>
+    <!-- <div class="logo">Mi Dashboard</div> -->
+    <div class="user-menu">
+      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Usuario" class="user-icon" />
+      <div class="dropdown">
+        <button class="dropdown-btn">▼</button>
+        <div class="dropdown-content">
+          <!-- <a href="#">Perfil</a>
             <a href="#">Configuración</a> -->
-            <a href="#" id="optionCerrarSession">Cerrar sesión</a>
-          </div>
+          <a href="#" id="optionCerrarSession">Cerrar sesión</a>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
   <div class="dashboard-container">
     <!-- <div class="cabecera">
       <h1>Bienvenido ....</h1>
@@ -53,11 +53,17 @@
         <div class="menu-icon">🙎🙎‍♂️</div>
         <div class="menu-title">Consulta DNI</div>
       </a>
-     <a href="mapa.html" class="menu-item">
+      <a href="mapa.html" class="menu-item">
         <div class="menu-icon">🗺️</div>
         <div class="menu-title">Acogimiento</div>
       </a>
-       <!-- <a href="transmisionDocumento.html" class="menu-item">
+      <a href="buscadorMaquinarias.html" class="menu-item">
+        <div class="menu-icon"><img src="recursos/imagenes/maquinaria.png" alt="Logo Aduana Pucallpa" class="logo"
+            style="width: 60px;">
+        </div>
+        <div class="menu-title">Busqueda DAM Maquinarias</div>
+      </a>
+      <!-- <a href="transmisionDocumento.html" class="menu-item">
         <div class="menu-icon">💻📲</div>
         <div class="menu-title">Transmision Documentos</div>
       </a>
@@ -69,17 +75,17 @@
   </div>
 
   <!-- Modal de bienvenida -->
-<div id="welcomeModal" class="modal">
+  <div id="welcomeModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="logo-container">
-            <img src="recursos/imagenes/LogoAduanas.png" alt="Logo de la empresa" class="company-logo">
-        </div>
-        <h2 class="welcome-title">¡Bienvenido!</h2>
-        <h2 id="nombreBienvenida" class="welcome-name">Nombre</h2>
-        <button id="acceptBtn" class="accept-button">Aceptar</button>
+      <span class="close">&times;</span>
+      <div class="logo-container">
+        <img src="recursos/imagenes/LogoAduanas.png" alt="Logo de la empresa" class="company-logo">
+      </div>
+      <h2 class="welcome-title">¡Bienvenido!</h2>
+      <h2 id="nombreBienvenida" class="welcome-name">Nombre</h2>
+      <button id="acceptBtn" class="accept-button">Aceptar</button>
     </div>
-</div>
+  </div>
   <script type="module" src="js/dashboard.js"></script>
 
 </body>

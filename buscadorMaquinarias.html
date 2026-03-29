@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Buscador Maquinarias</title>
+    <link rel="stylesheet" href="css/buscadorMaquinarias.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Buscador de Maquinarias 🚜</h1>
+            <p>Busqueda de DAMs y SERIEs de la partida 8429.XX.00.00</p>
+        </header>
+        <a href="dashboard.html" class="btn-secundary">⬅ Volver</a>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Palabra clave (ej: VIN, SERIE, MODELO...)"
+                    autocomplete="off">
+                <button id="searchBtn" class="btn-primary">
+                    Buscar
+                </button>
+            </div>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando datos...</p>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <div class="results-section">
+            <div id="resultsContainer" class="table-container hidden">
+                <div class="table-header">
+                    <h2>📊 Resultados</h2>
+                    <div id="resultCount"></div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr id="tableHeader">
+                                <!-- Las columnas se generarán dinámicamente -->
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Los datos se insertarán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="noResults" class="no-results hidden">
+                <p>No se encontraron resultados. Intenta con otra palabra.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/buscadorMaquinarias.js"></script>
+</body>
+
+</html>
