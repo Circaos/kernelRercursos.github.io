@@ -39,6 +39,11 @@ async function performSearch() {
     return;
   }
 
+  if (searchTerm.length < 3) {
+    showError('Por favor, ingrese al menos 3 caracteres');
+    return;
+  }
+
   // Mostrar loading, ocultar resultados anteriores y errores
   showLoading();
   hideResults();
@@ -88,7 +93,12 @@ async function performSearch() {
 
     console.log(rptData)
 
-    if (rptData.estatus != 200) {
+    if (rptData.estatus == 300) {
+      localStorage.clear();
+      alert(`Error en Session, ${rptData.mensaje}`);
+      window.location.href = "index.html";
+      return;
+    } else if (rptData.estatus != 200) {
       showError(`ERROR: ${rptData.mensaje}`)
       return
     }
