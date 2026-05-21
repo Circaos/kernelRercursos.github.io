@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="theme-color" content="#003366">
+
+  <!-- Favicon estándar -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <!-- Favicon en SVG (opcional) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Para Apple (iOS) -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Para Android/Chrome -->
+  <link rel="manifest" href="site.webmanifest">
+  <!-- Color de tema en navegadores móviles -->
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Consulta por Fechas</title>
+  <link rel="stylesheet" href="css/consulta.css" />
+  <!-- <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/cabecera.css"> -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+  <div class="cabecera">
+    <a href="dashboard.html" class="back-button">← Volver</a>
+    <button class="pestana" id="pestanaDirecta">CONSULTA DIRECTA</button>
+    <button class="pestana" id="pestanaOffline" style="display: none;">CONSULTA OFFLINE</button>
+  </div>
+  <div class="consulta-container">
+
+    <!-- Contenedor fijo para el título y formulario -->
+    <div class="sticky-header">
+
+      <div class="titulo">
+        <h1>Consulta</h1>
+        <div class="contenedorBotonExcel">
+          <button class="action-btn colorBotonExcel" id="botonDescargaExcel">↓ EXCEL</button>
+        </div>
+      </div>
+
+      <div class="date-range" id="grupoFechaDirecta">
+        <div class="input-group" id="grupoFechaInicio">
+          <label for="fechaInicio">Fecha Inicio</label>
+          <input type="date" id="fechaInicio" required />
+        </div>
+        <div class="input-group" id="grupoFechaFin">
+          <label for="fechaFin">Fecha Fin</label>
+          <input type="date" id="fechaFin" required />
+        </div>
+        <button id="consultarBtn" class="action-btn">Consultar</button>
+      </div>
+
+
+      <div class="date-range" id="grupoFechaOffline">
+        <div class="input-group" id="grupoFechaOffline">
+          <label for="fechaOffline">Fecha Offline</label>
+          <input type="date" id="fechaOffline" required />
+        </div>
+        <h2 id="ultimosDatosObtenidos" class="oculto">Ultimos datos obtenidos: 18/01/2026</h2>
+        <button id="consultarBtnOffline" class="action-btn">Consultar Offline</button>
+      </div>
+
+
+      <div class="error-message oculto" id="errorMsj">
+        <h4>- Error en el servidor, proviasnac.gob.pe no se encuentra disponible. Por favor, inténtelo de nuevo más
+          tarde. 😬
+        </h4>
+        <!-- <h4>- Puede hacer la consulta offline.</h4> -->
+        <!-- <h4>- Ultima actualización real: 18/01/2026</h4> -->
+        <!-- <h4>- Si el problema persiste, contacte al administrador.</h4> -->
+      </div>
+
+    </div>
+
+
+    <!-- Contenedor de la tabla con scroll -->
+    <div class="table-scroll-container">
+
+      <div class="results-table">
+        <div class="table-container">
+          <table id="resultadosTable">
+            <thead>
+              <tr>
+                <th id="nombreEmpresaID">
+                  <div class="cabeceraTabla">Nombre Empresa</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="rucID">
+                  <div class="cabeceraTabla">Ruc</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <!-- <th id="idSolicitudID">
+                  <div class="cabeceraTabla">IdSolicitud</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th> -->
+                <th id="origenID">
+                  <div class="cabeceraTabla">Origen</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="destinoID">
+                  <div class="cabeceraTabla">Destino</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="fechaSalidaID">
+                  <div class="cabeceraTabla">Fecha Salida</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="fechaLlegadaID">
+                  <div class="cabeceraTabla">Fecha Llegada</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="placaTractoID">
+                  <div class="cabeceraTabla">Pl Tracto</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="placaCamaBajaID">
+                  <div class="cabeceraTabla">Pl Cama Baja</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="cargaID">
+                  <div class="cabeceraTabla">Carga</div>
+                  <div class="iconoCabeceraTabla">🔎</div>
+                </th>
+                <th id="LinkID">
+                  <div class="cabeceraTabla">Link -</div>
+                  <div class="iconoCabeceraTabla">📎</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Los resultados se llenarán aquí -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Ventana Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-box">
+      <!-- <h1>Iniciar Sesión</h1> -->
+      <div class="input-group-modal" id="input-group-modal">
+        <label for="modalTextarea">Filtro</label>
+        <input type="text" id="modalTextarea" required />
+      </div>
+      <div class="modal-buttons">
+        <button id="okBtn" class="login-btn">OK</button>
+        <button id="cancelBtn" class="login-btn">CANCELAR</button>
+      </div>
+      <div id="errorMessage" class="error-message"></div>
+    </div>
+  </div>
+
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">Cargando datos...</div>
+    </div>
+  </div>
+
+  <script type="module" src="js/consulta.js"></script>
+</body>
+
+</html>
